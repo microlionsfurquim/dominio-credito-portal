@@ -1,0 +1,490 @@
+// ==========================================
+// APP.JS - DOMÍNIO SERVIÇOS DE CRÉDITO
+// ==========================================
+
+let currentUser = { role: 'analista_credito', name: 'Juliana Mendes', userKey: '429.915.058-93' };
+let activeProcessId = null;
+let approvalModeType = 'aprovar';
+
+let registeredUsers = [
+    { key: '429.915.058-93', name: 'Diretor Master', role: 'master', company: 'Domínio Matriz' },
+    { key: '111.111.111-11', name: 'Juliana Mendes', role: 'analista_credito', company: 'Domínio Crédito' },
+    { key: '222.222.222-22', name: 'Marcos Repasse', role: 'analista_repasse', company: 'Domínio Repasse' },
+    { key: '333.333.333-33', name: 'Roberto Corretor', role: 'construtora', company: 'MRV Engenharia' }
+];
+
+let processes = [
+    {
+        id: 1,
+        p1: { name: 'Carlos Eduardo Silva', cpf: '123.456.789-01', nasc: '1990-05-12', idade: 36, email: 'carlos@email.com', fone: '(11) 98888-7777', rendaTipo: 'RENDA FORMAL' },
+        p2: null,
+        emp: 'Residencial Parque das Flores',
+        valor: '2.500.000,25',
+        financiamento: '2.000.000,00',
+        fgts: '100.000,00',
+        corr: { nome: 'Roberto Silveira', email: 'roberto@mrv.com', wpp: '(11) 97777-6666' },
+        obs: 'Cliente pré-aprovado.',
+        stage: '1_analise', 
+        analyst: null,
+        rejection: null,
+        approvalData: null,
+        contractAttached: false,
+        montagemStatus: 'Montando a Pasta',
+        montagemObs: '',
+        montagemData: '',
+        cehopStatus: 'Aguardando Conformidade',
+        cehopSendDate: '',
+        comercialStatus: 'Em agendamento',
+        comercialDate: ''
+    }
+];
+
+function formatMoneyInput(input) {
+    let value = input.value.replace(/\D/g, '');
+    if (!value) {
+        input.value = '';
+        return;
+    }
+    value = (parseFloat(value) / 100).toFixed(2);
+    let parts = value.split('.');
+    let integerPart = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    let decimalPart = parts[1];
+    input.value = integerPart + ',' + decimalPart;
+}
+
+function handleLogin(event) {
+    event.preventDefault();
+    const identifier = document.getElementById('login-username').value.trim();
+    
+    if (identifier === '429.915.058-93') {
+        currentUser = { role: 'master', name: 'Diretor Master', userKey: identifier };
+    } else {
+        const found = registeredUsers.find(u => u.key === identifier);
+        if (found) {
+            currentUser = { role: found.role, name: found.name, userKey: found.key };
+        } else {
+            currentUser = { role: 'construtora', name: 'Corretor Parceiro', userKey: identifier };
+        }
+    }
+
+    document.getElementById('login-modal').classList.add('hidden');
+    document.getElementById('app-wrapper').classList.remove('hidden');
+    document.getElementById('user-display-name').innerText = currentUser.name;
+    document.getElementById('user-display-role').innerText = currentUser.role.replace('_', ' ').toUpperCase();
+    
+    renderKanban();
+}
+
+function logout() {
+    document.getElementById('app-wrapper').classList.add('hidden');
+    document.getElementById('login-modal').classList.remove('hidden');
+}
+
+function switchTab(tabId) {
+    document.querySelectorAll('#app-wrapper main > div').forEach(div => div.classList.add('hidden'));
+    document.querySelectorAll('.nav-tab').forEach(btn => btn.classList.remove('border-blue-500', 'text-white'));
+    document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+    document.getElementById(`nav-${tabId}-btn`).classList.add('border-blue-500', 'text-white');
+}
+
+function calculateAge(pNum) {
+    const nascInput = document.getElementById(`p${pNum}-nasc`).value;
+    if (!nascInput) return;
+    const birthDate = new Date(nascInput);
+    const today = new Date();
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) age--;
+    document.getElementById(`p${pNum}-idade`).value = `${age} anos`;
+}
+
+function addP2() {
+    document.getElementById('p2-container').classList.remove('hidden');
+    document.getElementById('btn-add-p2').classList.add('hidden');
+}
+
+function removeP2() {
+    document.getElementById('p2-container').classList.add('hidden');
+    document.getElementById('btn-add-p2').classList.remove('hidden');
+    document.getElementById('p2-name').value = '';
+    document.getElementById('p2-cpf').value = '';
+    document.getElementById('p2-nasc').value = '';
+}
+
+function submitNewProcess(event) {
+    event.preventDefault();
+    const newProc = {
+        id: processes.length + 1,
+        p1: {
+            name: document.getElementById('p1-name').value,
+            cpf: document.getElementById('p1-cpf').value,
+            nasc: document.getElementById('p1-nasc').value,
+            idade: document.getElementById('p1-idade').value,
+            email: document.getElementById('p1-email').value,
+            fone: document.getElementById('p1-fone').value,
+            rendaTipo: document.getElementById('p1-tipo-renda').value
+        },
+        p2: document.getElementById('p2-container').classList.contains('hidden') ? null : {
+            name: document.getElementById('p2-name').value,
+            cpf: document.getElementById('p2-cpf').value,
+            nasc: document.getElementById('p2-nasc').value,
+            idade: document.getElementById('p2-idade').value,
+            email: document.getElementById('p2-email').value,
+            fone: document.getElementById('p2-fone').value,
+            rendaTipo: document.getElementById('p2-tipo-renda').value
+        },
+        emp: document.getElementById('fin-emp').value,
+        valor: document.getElementById('fin-valor').value,
+        financiamento: document.getElementById('fin-financiamento').value,
+        fgts: document.getElementById('fin-fgts').value,
+        corr: {
+            nome: document.getElementById('corr-nome').value,
+            email: document.getElementById('corr-email').value,
+            wpp: document.getElementById('corr-wpp').value
+        },
+        obs: document.getElementById('proc-obs').value,
+        stage: '1_analise',
+        analyst: null,
+        rejection: null,
+        approvalData: null,
+        contractAttached: false,
+        montagemStatus: 'Montando a Pasta',
+        montagemObs: '',
+        montagemData: '',
+        cehopStatus: 'Aguardando Conformidade',
+        cehopSendDate: '',
+        comercialStatus: 'Em agendamento',
+        comercialDate: ''
+    };
+
+    processes.unshift(newProc);
+    document.getElementById('new-process-form').reset();
+    switchTab('kanban');
+    renderKanban();
+    alert('Processo cadastrado e encaminhado para 1ª Análise!');
+}
+
+function renderKanban() {
+    const stages = ['1_analise', 'reprovado', 'aprovado', 'aprovado_pendencia', 'aguardando_venda', 'venda_nova', 'montagem_pasta', 'cehop', 'entrevista_comercial'];
+    stages.forEach(stage => {
+        const container = document.getElementById(`list-${stage}`);
+        if (!container) return;
+        container.innerHTML = '';
+        const filtered = processes.filter(p => p.stage === stage);
+        document.getElementById(`count-${stage}`).innerText = filtered.length;
+
+        filtered.forEach(p => {
+            const card = document.createElement('div');
+            card.className = 'bg-white p-4 rounded-xl shadow-sm border border-slate-200 cursor-pointer hover:shadow-md transition-all';
+            card.onclick = () => openProcessModal(p.id);
+
+            card.innerHTML = `
+                <div class="flex justify-between items-start mb-1">
+                    <h4 class="font-bold text-sm text-slate-900">${p.p1.name}</h4>
+                    <span class="text-xs text-slate-500 font-semibold">R$ ${p.valor}</span>
+                </div>
+                <p class="text-[11px] text-blue-600 font-semibold mb-2"><i class="fa-solid fa-house mr-1"></i>${p.emp}</p>
+                <div class="text-[10px] text-slate-400 flex justify-between pt-2 border-t">
+                    <span>Corretor: ${p.corr.nome}</span>
+                    <span>${p.analyst ? p.analyst : ''}</span>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+    });
+}
+
+function openProcessModal(id) {
+    activeProcessId = id;
+    const p = processes.find(proc => proc.id === id);
+    if (!p) return;
+
+    document.getElementById('det-title').innerText = p.p1.name;
+    document.getElementById('det-meta').innerText = `${p.emp} | CPF: ${p.p1.cpf}`;
+    
+    let propHtml = `<b>1º Proponente (${p.p1.rendaTipo}):</b> ${p.p1.name} (${p.p1.idade})<br>Email: ${p.p1.email} | Tel: ${p.p1.fone}`;
+    if (p.p2) {
+        propHtml += `<br><br><b>2º Proponente (${p.p2.rendaTipo}):</b> ${p.p2.name} (${p.p2.idade})<br>Email: ${p.p2.email} | Tel: ${p.p2.fone}`;
+    }
+    document.getElementById('det-proponents-info').innerHTML = propHtml;
+    document.getElementById('det-fin-info').innerHTML = `<b>Valor Imóvel:</b> R$ ${p.valor} | <b>Financiamento:</b> R$ ${p.financiamento} | <b>FGTS:</b> R$ ${p.fgts}`;
+    document.getElementById('det-corr-info').innerHTML = `<b>Corretor:</b> ${p.corr.nome} (${p.corr.email} - Wpp: ${p.corr.wpp})`;
+    document.getElementById('det-obs-box').innerHTML = `<b>Observação:</b> ${p.obs || 'Nenhuma observação informada.'}`;
+
+    // Exibir motivo da reprova caso esteja reprovado
+    const rejBox = document.getElementById('rejection-info-box');
+    if (p.stage === 'reprovado' && p.rejection) {
+        rejBox.classList.remove('hidden');
+        document.getElementById('rej-motivo-text').innerText = p.rejection.motivo;
+        document.getElementById('rej-obs-text').innerText = p.rejection.obs || 'Nenhuma observação.';
+    } else {
+        rejBox.classList.add('hidden');
+    }
+
+    // Modo de consulta para construtora (exceto quando reprovado ou aguardando venda)
+    const isConsultation = currentUser.role === 'construtora' && p.stage !== 'aguardando_venda' && p.stage !== 'reprovado';
+    document.getElementById('consultation-notice').classList.toggle('hidden', !isConsultation);
+
+    // Painel de edição para a construtora quando o processo for REPROVADO
+    const builderEditBox = document.getElementById('builder-edit-reproved-box');
+    if (p.stage === 'reprovado' && (currentUser.role === 'construtora' || currentUser.role === 'master')) {
+        builderEditBox.classList.remove('hidden');
+        document.getElementById('edit-val-imovel').value = p.valor;
+        document.getElementById('edit-val-fin').value = p.financiamento;
+        document.getElementById('edit-val-fgts').value = p.fgts;
+        document.getElementById('edit-obs').value = p.obs || '';
+    } else {
+        builderEditBox.classList.add('hidden');
+    }
+
+    // Atribuição de analista
+    const analystInfo = document.getElementById('det-analyst-info');
+    const btnClaim = document.getElementById('btn-claim');
+    if (p.analyst) {
+        analystInfo.innerText = `Atribuído para: ${p.analyst}`;
+        btnClaim.classList.add('hidden');
+    } else {
+        analystInfo.innerText = 'Nenhum analista assumiu esta pasta ainda.';
+        btnClaim.classList.remove('hidden');
+    }
+
+    // Painel de análise de crédito
+    const actionPanel = document.getElementById('analyst-action-panel');
+    if ((p.stage === '1_analise') && (currentUser.role === 'analista_credito' || currentUser.role === 'master')) {
+        actionPanel.classList.remove('hidden');
+    } else {
+        actionPanel.classList.add('hidden');
+    }
+
+    // Upload de contrato assinado
+    const contractBox = document.getElementById('builder-upload-contract-box');
+    if (p.stage === 'aguardando_venda' && (currentUser.role === 'construtora' || currentUser.role === 'master')) {
+        contractBox.classList.remove('hidden');
+        document.getElementById('contract-file').value = '';
+        checkContractFile();
+    } else {
+        contractBox.classList.add('hidden');
+    }
+
+    // Painel de Repasse
+    const repasseBox = document.getElementById('repasse-montagem-box');
+    if ((p.stage === 'venda_nova' || p.stage === 'montagem_pasta') && (currentUser.role === 'analista_repasse' || currentUser.role === 'master')) {
+        repasseBox.classList.remove('hidden');
+        document.getElementById('montagem-status-sel').value = p.montagemStatus || 'Montando a Pasta';
+        document.getElementById('montagem-obs-input').value = p.montagemObs || '';
+        document.getElementById('montagem-data-input').value = p.montagemData || '';
+        toggleMontagemSubfields();
+    } else {
+        repasseBox.classList.add('hidden');
+    }
+
+    // Painel CEHOP
+    const cehopBox = document.getElementById('cehop-panel-box');
+    if (p.stage === 'cehop' && (currentUser.role === 'cehop' || currentUser.role === 'master')) {
+        cehopBox.classList.remove('hidden');
+        document.getElementById('cehop-status-sel').value = p.cehopStatus || 'Aguardando Conformidade';
+        document.getElementById('cehop-date-input').value = p.cehopSendDate || '';
+        toggleCehopSubfields();
+    } else {
+        cehopBox.classList.add('hidden');
+    }
+
+    // Painel Entrevista Comercial
+    const comercialBox = document.getElementById('comercial-panel-box');
+    if (p.stage === 'entrevista_comercial' && (currentUser.role === 'analista_repasse' || currentUser.role === 'master')) {
+        comercialBox.classList.remove('hidden');
+        document.getElementById('comercial-status-sel').value = p.comercialStatus || 'Em agendamento';
+        document.getElementById('comercial-date-input').value = p.comercialDate || '';
+        toggleComercialSubfields();
+    } else {
+        comercialBox.classList.add('hidden');
+    }
+
+    document.getElementById('modal-process-details').classList.remove('hidden');
+}
+
+function closeProcessModal() {
+    document.getElementById('modal-process-details').classList.add('hidden');
+    activeProcessId = null;
+}
+
+function resubmitReprocessed() {
+    const p = processes.find(proc => proc.id === activeProcessId);
+    if (p) {
+        p.valor = document.getElementById('edit-val-imovel').value;
+        p.financiamento = document.getElementById('edit-val-fin').value;
+        p.fgts = document.getElementById('edit-val-fgts').value;
+        p.obs = document.getElementById('edit-obs').value;
+        p.stage = '1_analise'; // Retorna para a 1ª Análise
+        p.analyst = null; // Limpa o analista anterior para nova atribuição
+        p.rejection = null;
+
+        closeProcessModal();
+        renderKanban();
+        alert('Processo atualizado, pendências sanadas e reenviado com sucesso para a 1ª Análise!');
+    }
+}
+
+function claimProcess() {
+    const p = processes.find(proc => proc.id === activeProcessId);
+    if (p) {
+        p.analyst = currentUser.name;
+        openProcessModal(p.id);
+        renderKanban();
+        alert('Pasta atribuída para você com sucesso!');
+    }
+}
+
+function toggleAnalysisForm(mode) {
+    approvalModeType = mode;
+    document.getElementById('form-reprovar').classList.toggle('hidden', mode !== 'reprovar');
+    const formAprovar = document.getElementById('form-aprovar');
+    formAprovar.classList.toggle('hidden', mode === 'reprovar');
+    
+    document.getElementById('approval-title-mode').innerText = mode === 'pendencia' ? 'Aprovado com Pendência' : 'Valores Apurados';
+    document.getElementById('pendencia-desc-box').classList.toggle('hidden', mode !== 'pendencia');
+}
+
+function executeReprove() {
+    const p = processes.find(proc => proc.id === activeProcessId);
+    if (p) {
+        p.stage = 'reprovado';
+        p.rejection = {
+            motivo: document.getElementById('rep-motivo').value,
+            obs: document.getElementById('rep-obs').value
+        };
+        closeProcessModal();
+        renderKanban();
+        alert('Processo reprovado e retornado para a Esteira de Reprovados da Construtora.');
+    }
+}
+
+function executeApprove() {
+    const p = processes.find(proc => proc.id === activeProcessId);
+    if (p) {
+        p.stage = approvalModeType === 'pendencia' ? 'aprovado_pendencia' : 'aprovado';
+        p.approvalData = {
+            mode: approvalModeType,
+            imovelAprovado: document.getElementById('ap-imovel').value,
+            finAprovado: document.getElementById('ap-fin').value,
+            fgts: document.getElementById('ap-fgts').value,
+            sp: document.getElementById('ap-sp').value,
+            fed: document.getElementById('ap-fed').value,
+            meses: document.getElementById('ap-meses').value,
+            renda: document.getElementById('ap-renda').value,
+            pendenciaTexto: document.getElementById('ap-pendencia-texto').value
+        };
+        
+        p.stage = 'aguardando_venda';
+
+        closeProcessModal();
+        renderKanban();
+        alert('Processo aprovado e encaminhado para "Aguardando Venda"!');
+    }
+}
+
+function checkContractFile() {
+    const fileInput = document.getElementById('contract-file');
+    const btnSend = document.getElementById('btn-send-contract');
+    if (fileInput.files.length > 0) {
+        btnSend.disabled = false;
+        btnSend.classList.remove('bg-slate-300', 'text-slate-500', 'cursor-not-allowed');
+        btnSend.classList.add('bg-amber-600', 'hover:bg-amber-700', 'text-white', 'shadow');
+    } else {
+        btnSend.disabled = true;
+        btnSend.classList.add('bg-slate-300', 'text-slate-500', 'cursor-not-allowed');
+        btnSend.classList.remove('bg-amber-600', 'hover:bg-amber-700', 'text-white', 'shadow');
+    }
+}
+
+function uploadContract() {
+    const p = processes.find(proc => proc.id === activeProcessId);
+    if (p) {
+        p.contractAttached = true;
+        p.stage = 'venda_nova';
+        closeProcessModal();
+        renderKanban();
+        alert('Contrato assinado com o cliente anexado com sucesso! O processo subiu para Venda Nova (Repasse).');
+    }
+}
+
+function toggleMontagemSubfields() {
+    const val = document.getElementById('montagem-status-sel').value;
+    const needsObs = ['Aguardando Pendencia Documental', 'Aguardando Matricula Atualizada'].includes(val);
+    const needsData = val === 'Aguardando Débito FGTS';
+    const needsDocs = val === 'Assinado Formulários';
+
+    document.getElementById('subfield-obs-div').classList.toggle('hidden', !needsObs);
+    document.getElementById('subfield-data-div').classList.toggle('hidden', !needsData);
+    document.getElementById('subfield-docs-div').classList.toggle('hidden', !needsDocs);
+}
+
+function saveRepasseMontagem() {
+    const p = processes.find(proc => proc.id === activeProcessId);
+    if (p) {
+        const status = document.getElementById('montagem-status-sel').value;
+        p.montagemStatus = status;
+        p.montagemObs = document.getElementById('montagem-obs-input').value;
+        p.montagemData = document.getElementById('montagem-data-input').value;
+
+        if (status === 'Assinado Formulários') {
+            const docsFile = document.getElementById('montagem-docs-file');
+            if (docsFile.files.length === 0) {
+                alert('É obrigatório anexar os formulários assinados e o termo de ciência para enviar à CEHOP.');
+                return;
+            }
+            p.stage = 'cehop';
+            alert('Formulários assinados anexados! Card enviado automaticamente para CEHOP.');
+        } else {
+            p.stage = 'montagem_pasta';
+            alert('Status de Repasse atualizado com sucesso!');
+        }
+
+        closeProcessModal();
+        renderKanban();
+    }
+}
+
+function toggleCehopSubfields() {
+    const val = document.getElementById('cehop-status-sel').value;
+    const needsDate = val === 'Aguardando Conformidade';
+    document.getElementById('cehop-subfield-date-div').classList.toggle('hidden', !needsDate);
+}
+
+function saveCehopStatus() {
+    const p = processes.find(proc => proc.id === activeProcessId);
+    if (p) {
+        p.cehopStatus = document.getElementById('cehop-status-sel').value;
+        p.cehopSendDate = document.getElementById('cehop-date-input').value;
+        alert('Status de CEHOP atualizado com sucesso!');
+        closeProcessModal();
+        renderKanban();
+    }
+}
+
+function moveToComercial() {
+    const p = processes.find(proc => proc.id === activeProcessId);
+    if (p) {
+        p.stage = 'entrevista_comercial';
+        alert('Processo movido para Entrevista Comercial!');
+        closeProcessModal();
+        renderKanban();
+    }
+}
+
+function toggleComercialSubfields() {
+    const val = document.getElementById('comercial-status-sel').value;
+    const needsDate = val === 'Aguardando agenda Se sim, para qual data foi agendado';
+    document.getElementById('comercial-subfield-date-div').classList.toggle('hidden', !needsDate);
+}
+
+function saveComercialStatus() {
+    const p = processes.find(proc => proc.id === activeProcessId);
+    if (p) {
+        p.comercialStatus = document.getElementById('comercial-status-sel').value;
+        p.comercialDate = document.getElementById('comercial-date-input').value;
+        alert('Status da Entrevista Comercial atualizado com sucesso!');
+        closeProcessModal();
+        renderKanban();
+    }
+}
