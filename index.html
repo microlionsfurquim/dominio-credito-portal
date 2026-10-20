@@ -7,9 +7,7 @@
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-        tailwind.config = {
-            darkMode: 'class',
-        }
+        tailwind.config = { darkMode: 'class' }
     </script>
     <!-- FontAwesome para Ícones -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -34,17 +32,15 @@
                     <i class="fa-solid fa-landmark text-2xl"></i>
                 </div>
                 <h1 class="text-2xl font-bold text-slate-900 dark:text-white">Domínio Serviços</h1>
-                <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Portal Correspondente Caixa - Acesso Restrito</p>
+                <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Portal Construtora Tera - Acesso Restrito</p>
             </div>
 
             <form id="login-form" onsubmit="handleLogin(event)" class="space-y-5">
                 <div>
                     <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-400 mb-2">CPF ou CNPJ</label>
                     <div class="relative">
-                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
-                            <i class="fa-solid fa-id-card"></i>
-                        </span>
-                        <input type="text" id="login-cpf" required placeholder="Digite seu CPF ou CNPJ" 
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400"><i class="fa-solid fa-id-card"></i></span>
+                        <input type="text" id="login-cpf" required placeholder="000.000.000-00" oninput="maskCpfCnpj(this)" 
                             class="w-full pl-10 pr-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-900 dark:text-white transition">
                     </div>
                 </div>
@@ -52,9 +48,7 @@
                 <div>
                     <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-400 mb-2">Senha de Acesso</label>
                     <div class="relative">
-                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
-                            <i class="fa-solid fa-lock"></i>
-                        </span>
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400"><i class="fa-solid fa-lock"></i></span>
                         <input type="password" id="login-pass" required placeholder="••••••••" 
                             class="w-full pl-10 pr-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-900 dark:text-white transition">
                     </div>
@@ -81,7 +75,7 @@
                     </div>
                     <div>
                         <span class="font-bold text-base sm:text-lg tracking-wide block leading-none">Domínio Serviços</span>
-                        <span class="text-[10px] sm:text-xs text-blue-200">Correspondente Caixa</span>
+                        <span class="text-[10px] sm:text-xs text-blue-200">Construtora Tera & Repasse</span>
                     </div>
                 </div>
 
@@ -90,24 +84,6 @@
                         <i id="theme-icon" class="fa-solid fa-moon"></i>
                     </button>
 
-                    <!-- SINO DE NOTIFICAÇÕES -->
-                    <div class="relative">
-                        <button onclick="toggleNotifications()" class="relative p-2 text-blue-200 hover:text-white transition">
-                            <i class="fa-solid fa-bell text-xl"></i>
-                            <span id="notif-badge" class="hidden absolute top-1 right-1 w-4 h-4 bg-red-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center">0</span>
-                        </button>
-                        <div id="notif-dropdown" class="hidden absolute right-0 mt-2 w-72 sm:w-80 bg-white dark:bg-slate-900 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-800 z-50 text-slate-800 dark:text-slate-200 overflow-hidden">
-                            <div class="p-4 bg-slate-50 dark:bg-slate-800 border-b border-slate-100 dark:border-slate-700 flex items-center justify-between">
-                                <span class="font-semibold text-sm">Notificações / SLA</span>
-                                <span class="text-xs text-blue-600 dark:text-blue-400 cursor-pointer hover:underline" onclick="clearNotifications()">Marcar lidas</span>
-                            </div>
-                            <div id="notif-list" class="max-h-64 overflow-y-auto divide-y divide-slate-100 dark:divide-slate-800 text-xs">
-                                <div class="p-4 text-center text-slate-400">Nenhuma notificação recente</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Perfil do Usuário -->
                     <div class="flex items-center space-x-3 pl-3 sm:pl-4 border-l border-blue-800">
                         <div class="text-right hidden sm:block">
                             <div id="user-name-display" class="text-sm font-semibold text-white">Usuário</div>
@@ -128,23 +104,23 @@
                     <button onclick="switchTab('kanban')" id="tab-kanban-btn" class="px-3 sm:px-4 py-2 bg-blue-900 text-white text-xs sm:text-sm font-semibold rounded-xl shadow transition">
                         <i class="fa-solid fa-columns mr-1.5"></i>Esteira
                     </button>
-                    <button onclick="switchTab('dashboard')" id="tab-dashboard-btn" class="px-3 sm:px-4 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs sm:text-sm font-semibold rounded-xl transition">
+                    <button onclick="switchTab('dashboard')" id="tab-dashboard-btn" class="px-3 sm:px-4 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-700 dark:text-slate-200 text-xs sm:text-sm font-semibold rounded-xl transition">
                         <i class="fa-solid fa-chart-pie mr-1.5"></i>Dashboard
                     </button>
-                    <!-- ABA FUNCIONÁRIOS (OCULTA PARA CONSTRUTORAS) -->
-                    <button onclick="switchTab('users')" id="tab-users-btn" class="px-3 sm:px-4 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs sm:text-sm font-semibold rounded-xl transition">
-                        <i class="fa-solid fa-users-gear mr-1.5"></i>Funcionários
+                    <button onclick="switchTab('users')" id="tab-users-btn" class="px-3 sm:px-4 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-700 dark:text-slate-200 text-xs sm:text-sm font-semibold rounded-xl transition">
+                        <i class="fa-solid fa-users-gear mr-1.5"></i>Edição de Permissões
                     </button>
-                    <button onclick="switchTab('distratos')" id="tab-distratos-btn" class="px-3 sm:px-4 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs sm:text-sm font-semibold rounded-xl transition">
+                    <button onclick="switchTab('distratos')" id="tab-distratos-btn" class="px-3 sm:px-4 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-700 dark:text-slate-200 text-xs sm:text-sm font-semibold rounded-xl transition">
                         <i class="fa-solid fa-ban mr-1.5 text-red-500"></i>Distratos (<span id="distrato-count-badge">0</span>)
+                    </button>
+                    <button onclick="switchTab('finalizados')" id="tab-finalizados-btn" class="px-3 sm:px-4 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-700 dark:text-slate-200 text-xs sm:text-sm font-semibold rounded-xl transition">
+                        <i class="fa-solid fa-folder-open mr-1.5 text-emerald-500"></i>Processos Finalizados
                     </button>
                 </div>
 
                 <div class="flex items-center space-x-2 sm:space-x-3 w-full md:w-auto justify-end">
                     <div class="relative flex-1 md:w-64">
-                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
-                            <i class="fa-solid fa-search text-xs"></i>
-                        </span>
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400"><i class="fa-solid fa-search text-xs"></i></span>
                         <input type="text" id="global-search" oninput="filterKanban()" placeholder="Buscar proponente, CPF..." 
                             class="w-full pl-9 pr-4 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-900 transition">
                     </div>
@@ -172,27 +148,17 @@
             <!-- TAB 2: DASHBOARD -->
             <div id="tab-dashboard" class="hidden space-y-6">
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" id="metric-cards"></div>
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800">
-                        <h3 class="font-bold text-slate-900 dark:text-white mb-4 text-sm flex items-center"><i class="fa-solid fa-chart-bar text-blue-900 dark:text-blue-400 mr-2"></i>Volume por Etapa da Esteira</h3>
-                        <div id="chart-etapas" class="space-y-3"></div>
-                    </div>
-                    <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800">
-                        <h3 class="font-bold text-slate-900 dark:text-white mb-4 text-sm flex items-center"><i class="fa-solid fa-building text-blue-900 dark:text-blue-400 mr-2"></i>Processos por Empreendimento / Construtora</h3>
-                        <div id="chart-construtoras" class="space-y-3"></div>
-                    </div>
-                </div>
             </div>
 
-            <!-- TAB 3: GESTÃO DE FUNCIONÁRIOS -->
+            <!-- TAB 3: USUÁRIOS E PERMISSÕES -->
             <div id="tab-users" class="hidden space-y-6">
                 <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800">
                     <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
                         <div>
-                            <h3 class="text-lg font-bold text-slate-900 dark:text-white">Cadastro e Gestão de Usuários / Funcionários</h3>
-                            <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Apenas o Diretor Master pode gerenciar senhas e permissões.</p>
+                            <h3 class="text-lg font-bold text-slate-900 dark:text-white">Edição de Permissões (Exclusivo Diretor)</h3>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Gerenciamento completo de acessos e etapas permitidas.</p>
                         </div>
-                        <button id="btn-add-user" onclick="openNewUserModal()" class="hidden px-4 py-2 bg-blue-900 hover:bg-blue-800 text-white text-xs font-semibold rounded-xl shadow transition flex items-center space-x-1">
+                        <button onclick="openNewUserModal()" class="px-4 py-2 bg-blue-900 hover:bg-blue-800 text-white text-xs font-semibold rounded-xl shadow transition flex items-center space-x-1">
                             <i class="fa-solid fa-user-plus"></i>
                             <span>Novo Usuário</span>
                         </button>
@@ -205,7 +171,6 @@
                                     <th class="p-3">CPF / CNPJ</th>
                                     <th class="p-3">Senha</th>
                                     <th class="p-3">Perfil</th>
-                                    <th class="p-3">Etapas Permitidas</th>
                                     <th class="p-3 text-right">Ações</th>
                                 </tr>
                             </thead>
@@ -218,26 +183,32 @@
             <!-- TAB 4: DISTRATOS -->
             <div id="tab-distratos" class="hidden space-y-6">
                 <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800">
-                    <div class="flex items-center justify-between mb-6">
-                        <div>
-                            <h3 class="text-lg font-bold text-slate-900 dark:text-white"><i class="fa-solid fa-ban text-red-500 mr-2"></i>Central de Processos Distratados</h3>
-                            <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Lista de todos os proponentes que tiveram seus processos cancelados/distratados em qualquer etapa.</p>
-                        </div>
-                    </div>
+                    <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-4"><i class="fa-solid fa-ban text-red-500 mr-2"></i>Processos Distratados</h3>
                     <div class="overflow-x-auto">
                         <table class="w-full text-left border-collapse text-xs">
                             <thead>
-                                <tr class="bg-slate-50 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 uppercase tracking-wider">
-                                    <th class="p-3">ID</th>
-                                    <th class="p-3">Proponente</th>
-                                    <th class="p-3">CPF</th>
-                                    <th class="p-3">Empreendimento</th>
-                                    <th class="p-3">Valor VGF</th>
-                                    <th class="p-3">Etapa de Origem</th>
-                                    <th class="p-3 text-right">Ações</th>
+                                <tr class="bg-slate-50 dark:bg-slate-800 border-b text-slate-600 uppercase tracking-wider">
+                                    <th class="p-3">ID</th><th class="p-3">Proponente</th><th class="p-3">CPF</th><th class="p-3">Empreendimento</th><th class="p-3">Valor</th><th class="p-3 text-right">Ações</th>
                                 </tr>
                             </thead>
-                            <tbody id="distratos-table-body" class="divide-y divide-slate-100 dark:divide-slate-800"></tbody>
+                            <tbody id="distratos-table-body" class="divide-y"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 5: PROCESSOS FINALIZADOS -->
+            <div id="tab-finalizados" class="hidden space-y-6">
+                <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800">
+                    <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-4"><i class="fa-solid fa-folder-open text-emerald-500 mr-2"></i>Pasta de Processos Finalizados</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse text-xs">
+                            <thead>
+                                <tr class="bg-slate-50 dark:bg-slate-800 border-b text-slate-600 uppercase tracking-wider">
+                                    <th class="p-3">ID</th><th class="p-3">Proponente</th><th class="p-3">CPF</th><th class="p-3">Empreendimento</th><th class="p-3">Status</th><th class="p-3 text-right">Relatório PDF</th>
+                                </tr>
+                            </thead>
+                            <tbody id="finalizados-table-body" class="divide-y"></tbody>
                         </table>
                     </div>
                 </div>
@@ -245,14 +216,12 @@
         </main>
     </div>
 
-    <!-- MODAL DE CADASTRO DE PROCESSO -->
+    <!-- MODAL DE NOVO PROCESSO -->
     <div id="modal-novo" class="hidden fixed inset-0 bg-slate-900/60 z-50 flex items-center justify-center p-2 sm:p-4 overflow-y-auto">
         <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl max-w-4xl w-full p-4 sm:p-8 border border-slate-100 dark:border-slate-800 my-4 sm:my-8 max-h-[92vh] flex flex-col">
             <div class="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800 mb-6">
-                <h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white"><i class="fa-solid fa-folder-plus text-blue-900 dark:text-blue-400 mr-2"></i>Cadastro de Processos - Construtora</h3>
-                <button onclick="closeNewProcessModal()" class="w-8 h-8 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 flex items-center justify-center text-slate-500 transition">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
+                <h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white"><i class="fa-solid fa-folder-plus text-blue-900 dark:text-blue-400 mr-2"></i>Cadastro de Processo : Novo Processo</h3>
+                <button onclick="closeNewProcessModal()" class="w-8 h-8 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 flex items-center justify-center text-slate-500 transition"><i class="fa-solid fa-xmark"></i></button>
             </div>
             
             <form onsubmit="handleNewProcess(event)" class="space-y-6 flex-1 overflow-y-auto pr-1">
@@ -261,221 +230,186 @@
                     <h4 class="font-bold text-xs uppercase tracking-wider text-blue-900 dark:text-blue-400"><i class="fa-solid fa-user mr-1"></i>1º Proponente</h4>
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                         <div class="sm:col-span-2">
-                            <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Nome Completo</label>
-                            <input type="text" id="np-p1-nome" required placeholder="Nome do 1º proponente" class="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-900">
+                            <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Nome</label>
+                            <input type="text" id="np-p1-nome" required placeholder="Nome do 1º proponente" class="w-full px-3 py-2 bg-white dark:bg-slate-800 border rounded-xl text-xs dark:text-white">
                         </div>
                         <div>
                             <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">CPF</label>
-                            <input type="text" id="np-p1-cpf" required placeholder="000.000.000-00" class="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-900">
+                            <input type="text" id="np-p1-cpf" required placeholder="000.000.000-00" oninput="maskCpfCnpj(this)" class="w-full px-3 py-2 bg-white dark:bg-slate-800 border rounded-xl text-xs dark:text-white">
                         </div>
                     </div>
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                         <div>
                             <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Data de Nascimento</label>
-                            <input type="date" id="np-p1-nasc" required onchange="calcularIdade('p1')" class="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-900">
+                            <input type="date" id="np-p1-nasc" required onchange="calcularIdade('p1')" class="w-full px-3 py-2 bg-white dark:bg-slate-800 border rounded-xl text-xs dark:text-white">
                             <span id="np-p1-idade" class="text-[10px] text-blue-900 dark:text-blue-400 font-bold mt-0.5 block">Idade: -- anos</span>
                         </div>
                         <div>
-                            <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">E-mail</label>
-                            <input type="email" id="np-p1-email" required placeholder="email@exemplo.com" class="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-900">
+                            <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Email</label>
+                            <input type="email" id="np-p1-email" required placeholder="email@exemplo.com" class="w-full px-3 py-2 bg-white dark:bg-slate-800 border rounded-xl text-xs dark:text-white">
                         </div>
                         <div>
-                            <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Telefone / WhatsApp</label>
-                            <input type="text" id="np-p1-tel" required placeholder="(00) 00000-0000" class="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-900">
+                            <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Telefone</label>
+                            <input type="text" id="np-p1-tel" required placeholder="(00) 00000-0000" class="w-full px-3 py-2 bg-white dark:bg-slate-800 border rounded-xl text-xs dark:text-white">
                         </div>
                     </div>
                 </div>
 
                 <!-- 2º PROPONENTE -->
                 <div class="bg-slate-50 dark:bg-slate-800/50 p-4 rounded-xl border border-slate-200 dark:border-slate-700 space-y-4">
-                    <h4 class="font-bold text-xs uppercase tracking-wider text-blue-900 dark:text-blue-400"><i class="fa-solid fa-user-plus mr-1"></i>2º Proponente (Opcional)</h4>
+                    <h4 class="font-bold text-xs uppercase tracking-wider text-blue-900 dark:text-blue-400"><i class="fa-solid fa-user-plus mr-1"></i>2º Proponente</h4>
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                         <div class="sm:col-span-2">
-                            <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Nome Completo</label>
-                            <input type="text" id="np-p2-nome" placeholder="Nome do 2º proponente" class="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-900">
+                            <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Nome</label>
+                            <input type="text" id="np-p2-nome" placeholder="Nome do 2º proponente" class="w-full px-3 py-2 bg-white dark:bg-slate-800 border rounded-xl text-xs dark:text-white">
                         </div>
                         <div>
                             <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">CPF</label>
-                            <input type="text" id="np-p2-cpf" placeholder="000.000.000-00" class="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-900">
+                            <input type="text" id="np-p2-cpf" placeholder="000.000.000-00" oninput="maskCpfCnpj(this)" class="w-full px-3 py-2 bg-white dark:bg-slate-800 border rounded-xl text-xs dark:text-white">
                         </div>
                     </div>
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                         <div>
                             <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Data de Nascimento</label>
-                            <input type="date" id="np-p2-nasc" onchange="calcularIdade('p2')" class="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-900">
+                            <input type="date" id="np-p2-nasc" onchange="calcularIdade('p2')" class="w-full px-3 py-2 bg-white dark:bg-slate-800 border rounded-xl text-xs dark:text-white">
                             <span id="np-p2-idade" class="text-[10px] text-blue-900 dark:text-blue-400 font-bold mt-0.5 block">Idade: -- anos</span>
                         </div>
                         <div>
-                            <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">E-mail</label>
-                            <input type="email" id="np-p2-email" placeholder="email@exemplo.com" class="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-900">
+                            <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Email</label>
+                            <input type="email" id="np-p2-email" placeholder="email@exemplo.com" class="w-full px-3 py-2 bg-white dark:bg-slate-800 border rounded-xl text-xs dark:text-white">
                         </div>
                         <div>
-                            <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Telefone / WhatsApp</label>
-                            <input type="text" id="np-p2-tel" placeholder="(00) 00000-0000" class="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-900">
+                            <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Telefone</label>
+                            <input type="text" id="np-p2-tel" placeholder="(00) 00000-0000" class="w-full px-3 py-2 bg-white dark:bg-slate-800 border rounded-xl text-xs dark:text-white">
                         </div>
                     </div>
                 </div>
 
-                <!-- DADOS DO FINANCIAMENTO E CORRETOR -->
+                <!-- DADOS DO FINANCIAMENTO -->
                 <div class="bg-slate-50 dark:bg-slate-800/50 p-4 rounded-xl border border-slate-200 dark:border-slate-700 space-y-4">
-                    <h4 class="font-bold text-xs uppercase tracking-wider text-blue-900 dark:text-blue-400"><i class="fa-solid fa-house-chimney mr-1"></i>Dados do Financiamento & Corretor</h4>
+                    <h4 class="font-bold text-xs uppercase tracking-wider text-blue-900 dark:text-blue-400"><i class="fa-solid fa-house-chimney mr-1"></i>Dados do Financiamento</h4>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                             <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Nome do Empreendimento</label>
-                            <select id="np-empreendimento" required class="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-900">
-                                <option value="Residencial Bella Vista">Residencial Bella Vista</option>
-                                <option value="Parque das Flores">Parque das Flores</option>
-                                <option value="Solar dos Pássaros">Solar dos Pássaros</option>
-                                <option value="Horizonte Paulista">Horizonte Paulista</option>
-                            </select>
+                            <input type="text" id="np-empreendimento" required placeholder="Ex: Residencial Tera" class="w-full px-3 py-2 bg-white dark:bg-slate-800 border rounded-xl text-xs dark:text-white">
                         </div>
                         <div>
-                            <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Valor de Compra e Venda (R$)</label>
-                            <input type="text" id="np-valor" required placeholder="250.000,00" class="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-900" oninput="formatCurrencyInput(this)">
+                            <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Valor de Compra e Venda do Imóvel (R$)</label>
+                            <input type="text" id="np-valor" required placeholder="2.500,25" class="w-full px-3 py-2 bg-white dark:bg-slate-800 border rounded-xl text-xs dark:text-white" oninput="formatCurrencyInput(this)">
                         </div>
                     </div>
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                         <div>
                             <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Nome do Corretor</label>
-                            <input type="text" id="np-corretor-nome" required placeholder="Nome" class="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-900">
+                            <input type="text" id="np-corretor-nome" required placeholder="Nome" class="w-full px-3 py-2 bg-white dark:bg-slate-800 border rounded-xl text-xs dark:text-white">
                         </div>
                         <div>
-                            <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">E-mail do Corretor</label>
-                            <input type="email" id="np-corretor-email" required placeholder="email@dominio.com" class="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-900">
+                            <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Email do Corretor</label>
+                            <input type="email" id="np-corretor-email" required placeholder="email@dominio.com" class="w-full px-3 py-2 bg-white dark:bg-slate-800 border rounded-xl text-xs dark:text-white">
                         </div>
                         <div>
                             <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">WhatsApp do Corretor</label>
-                            <input type="text" id="np-corretor-wpp" required placeholder="(00) 00000-0000" class="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-900">
+                            <input type="text" id="np-corretor-wpp" required placeholder="(00) 00000-0000" class="w-full px-3 py-2 bg-white dark:bg-slate-800 border rounded-xl text-xs dark:text-white">
                         </div>
                     </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">FGTS Utilizado (R$)</label>
-                        <input type="text" id="np-fgts" placeholder="0,00" class="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-900" oninput="formatCurrencyInput(this)">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">FGTS (R$)</label>
+                            <input type="text" id="np-fgts" placeholder="2.500,25" class="w-full px-3 py-2 bg-white dark:bg-slate-800 border rounded-xl text-xs dark:text-white" oninput="formatCurrencyInput(this)">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Valor do Financiamento (R$)</label>
+                            <input type="text" id="np-financiamento" placeholder="2.500,25" class="w-full px-3 py-2 bg-white dark:bg-slate-800 border rounded-xl text-xs dark:text-white" oninput="formatCurrencyInput(this)">
+                        </div>
                     </div>
                 </div>
 
                 <!-- VALORES PARA ANÁLISE DE CRÉDITO -->
                 <div class="bg-slate-50 dark:bg-slate-800/50 p-4 rounded-xl border border-slate-200 dark:border-slate-700 space-y-4">
-                    <h4 class="font-bold text-xs uppercase tracking-wider text-blue-900 dark:text-blue-400"><i class="fa-solid fa-calculator mr-1"></i>Valores para Análise de Crédito & Renda</h4>
+                    <h4 class="font-bold text-xs uppercase tracking-wider text-blue-900 dark:text-blue-400"><i class="fa-solid fa-calculator mr-1"></i>Valores para Análise de Crédito</h4>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div class="space-y-2">
                             <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400">Renda 1º Proponente</label>
-                            <input type="text" id="np-renda1-val" placeholder="R$ 5.000,00" class="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-900" oninput="formatCurrencyInput(this)">
-                            <select id="np-renda1-tipo" class="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs dark:text-white">
-                                <option value="Formal">Renda Formal</option>
-                                <option value="Informal">Renda Informal</option>
+                            <input type="text" id="np-renda1-val" placeholder="2.500,25" class="w-full px-3 py-2 bg-white dark:bg-slate-800 border rounded-xl text-xs dark:text-white" oninput="formatCurrencyInput(this)">
+                            <select id="np-renda1-tipo" class="w-full px-3 py-2 bg-white dark:bg-slate-800 border rounded-xl text-xs dark:text-white">
+                                <option value="RENDA FORMAL">RENDA FORMAL</option>
+                                <option value="RENDA INFORMAL">RENDA INFORMAL</option>
                             </select>
                         </div>
                         <div class="space-y-2">
                             <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400">Renda 2º Proponente</label>
-                            <input type="text" id="np-renda2-val" placeholder="R$ 0,00" class="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-900" oninput="formatCurrencyInput(this)">
-                            <select id="np-renda2-tipo" class="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs dark:text-white">
-                                <option value="Formal">Renda Formal</option>
-                                <option value="Informal">Renda Informal</option>
+                            <input type="text" id="np-renda2-val" placeholder="2.500,25" class="w-full px-3 py-2 bg-white dark:bg-slate-800 border rounded-xl text-xs dark:text-white" oninput="formatCurrencyInput(this)">
+                            <select id="np-renda2-tipo" class="w-full px-3 py-2 bg-white dark:bg-slate-800 border rounded-xl text-xs dark:text-white">
+                                <option value="RENDA FORMAL">RENDA FORMAL</option>
+                                <option value="RENDA INFORMAL">RENDA INFORMAL</option>
                             </select>
                         </div>
                     </div>
                 </div>
 
-                <!-- CAMPO OBSERVAÇÃO -->
                 <div>
-                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-400 mb-1">Observações do Processo</label>
-                    <textarea id="np-obs" rows="3" placeholder="Informações relevantes..." class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-900"></textarea>
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-400 mb-1">Observação</label>
+                    <textarea id="np-obs" rows="3" placeholder="Observações do corretor..." class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border rounded-xl text-sm dark:text-white"></textarea>
                 </div>
 
-                <!-- CAMPOS FLUTUANTES PARA ANEXO DE DOCUMENTOS -->
+                <!-- ANEXOS FLUTUANTES -->
                 <div class="bg-blue-50/50 dark:bg-blue-950/30 p-4 rounded-xl border border-blue-100 dark:border-blue-900/50 space-y-4">
-                    <h4 class="font-bold text-blue-900 dark:text-blue-400 text-xs uppercase tracking-wider"><i class="fa-solid fa-paperclip mr-1"></i>Anexos Obrigatórios (Campos Flutuantes)</h4>
+                    <h4 class="font-bold text-blue-900 dark:text-blue-400 text-xs uppercase tracking-wider"><i class="fa-solid fa-paperclip mr-1"></i>Anexar Documentos (Campos Flutuantes)</h4>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
-                        <div>
-                            <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Identificação (RG/CNH)</label>
-                            <input type="file" id="file-rg" class="w-full bg-white dark:bg-slate-800 p-2 rounded-xl border border-slate-200 dark:border-slate-700 text-[11px] dark:text-slate-300">
-                        </div>
-                        <div>
-                            <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Comprovante de Renda</label>
-                            <input type="file" id="file-renda" class="w-full bg-white dark:bg-slate-800 p-2 rounded-xl border border-slate-200 dark:border-slate-700 text-[11px] dark:text-slate-300">
-                        </div>
-                        <div>
-                            <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Comprovante de Endereço</label>
-                            <input type="file" id="file-endereco" class="w-full bg-white dark:bg-slate-800 p-2 rounded-xl border border-slate-200 dark:border-slate-700 text-[11px] dark:text-slate-300">
-                        </div>
-                        <div>
-                            <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Declaração de IR</label>
-                            <input type="file" id="file-ir" class="w-full bg-white dark:bg-slate-800 p-2 rounded-xl border border-slate-200 dark:border-slate-700 text-[11px] dark:text-slate-300">
-                        </div>
-                        <div>
-                            <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Matrícula do Imóvel</label>
-                            <input type="file" id="file-matricula" class="w-full bg-white dark:bg-slate-800 p-2 rounded-xl border border-slate-200 dark:border-slate-700 text-[11px] dark:text-slate-300">
-                        </div>
-                        <div>
-                            <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Extrato do FGTS</label>
-                            <input type="file" id="file-fgts" class="w-full bg-white dark:bg-slate-800 p-2 rounded-xl border border-slate-200 dark:border-slate-700 text-[11px] dark:text-slate-300">
-                        </div>
+                        <div><label class="block font-semibold mb-1">Documento de Identificação</label><input type="file" id="file-rg" class="w-full bg-white dark:bg-slate-800 p-2 rounded-xl border text-[11px]"></div>
+                        <div><label class="block font-semibold mb-1">Comprovante de Renda</label><input type="file" id="file-renda" class="w-full bg-white dark:bg-slate-800 p-2 rounded-xl border text-[11px]"></div>
+                        <div><label class="block font-semibold mb-1">Comprovante de Endereço</label><input type="file" id="file-endereco" class="w-full bg-white dark:bg-slate-800 p-2 rounded-xl border text-[11px]"></div>
+                        <div><label class="block font-semibold mb-1">Declaração de Imposto De Renda</label><input type="file" id="file-ir" class="w-full bg-white dark:bg-slate-800 p-2 rounded-xl border text-[11px]"></div>
+                        <div><label class="block font-semibold mb-1">Matricula de Imovel</label><input type="file" id="file-matricula" class="w-full bg-white dark:bg-slate-800 p-2 rounded-xl border text-[11px]"></div>
+                        <div><label class="block font-semibold mb-1">Extrato do FGTS</label><input type="file" id="file-fgts" class="w-full bg-white dark:bg-slate-800 p-2 rounded-xl border text-[11px]"></div>
                     </div>
                 </div>
 
                 <div class="flex justify-end space-x-3 pt-4 border-t border-slate-100 dark:border-slate-800">
-                    <button type="button" onclick="closeNewProcessModal()" class="px-4 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs font-semibold rounded-xl transition">Cancelar</button>
-                    <button type="submit" class="px-5 py-2 bg-blue-900 hover:bg-blue-800 text-white text-xs font-semibold rounded-xl shadow transition">Salvar Processo</button>
+                    <button type="button" onclick="closeNewProcessModal()" class="px-4 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-700 dark:text-slate-300 text-xs font-semibold rounded-xl transition">Cancelar</button>
+                    <button type="submit" class="px-5 py-2 bg-blue-900 hover:bg-blue-800 text-white text-xs font-semibold rounded-xl shadow transition">Submeter Pasta</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- MODAL DE CADASTRO / EDIÇÃO DE USUÁRIO -->
+    <!-- MODAL DE USUÁRIOS -->
     <div id="modal-user" class="hidden fixed inset-0 bg-slate-900/60 z-50 flex items-center justify-center p-4 overflow-y-auto">
         <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl max-w-lg w-full p-6 sm:p-8 border border-slate-100 dark:border-slate-800 my-8">
             <div class="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800 mb-6">
-                <h3 id="user-modal-title" class="text-lg font-bold text-slate-900 dark:text-white"><i class="fa-solid fa-user-plus text-blue-900 dark:text-blue-400 mr-2"></i>Cadastrar Funcionário</h3>
-                <button onclick="closeNewUserModal()" class="w-8 h-8 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 flex items-center justify-center text-slate-500 transition">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
+                <h3 class="text-lg font-bold text-slate-900 dark:text-white"><i class="fa-solid fa-user-plus text-blue-900 dark:text-blue-400 mr-2"></i>Edição de Permissões (Diretor)</h3>
+                <button onclick="closeNewUserModal()" class="w-8 h-8 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 flex items-center justify-center text-slate-500 transition"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <form onsubmit="handleSaveUser(event)" class="space-y-4">
-                <input type="hidden" id="nu-index" value="-1">
                 <div>
-                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-400 mb-1">Nome Completo</label>
-                    <input type="text" id="nu-nome" required placeholder="Nome" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-900">
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-400 mb-1">Nome</label>
+                    <input type="text" id="nu-nome" required placeholder="Nome" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border rounded-xl text-sm dark:text-white">
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                         <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-400 mb-1">CPF ou CNPJ</label>
-                        <input type="text" id="nu-cpf" required placeholder="000.000.000-00" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-900">
+                        <input type="text" id="nu-cpf" required placeholder="000.000.000-00" oninput="maskCpfCnpj(this)" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border rounded-xl text-sm dark:text-white">
                     </div>
                     <div>
                         <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-400 mb-1">Senha</label>
-                        <input type="text" id="nu-pass" required placeholder="Senha" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-900 font-mono">
+                        <input type="text" id="nu-pass" required placeholder="Senha" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border rounded-xl text-sm dark:text-white font-mono">
                     </div>
                 </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-400 mb-1">Perfil</label>
-                        <select id="nu-role" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-900">
-                            <option value="analista">Analista de Crédito</option>
-                            <option value="construtora">Construtora Parceira</option>
-                            <option value="master">Diretor / Master</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-400 mb-1">Empreendimento Vinculado</label>
-                        <select id="nu-empreendimento" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-900">
-                            <option value="all">Todos (Master / Analista)</option>
-                            <option value="Residencial Bella Vista">Residencial Bella Vista</option>
-                            <option value="Parque das Flores">Parque das Flores</option>
-                            <option value="Solar dos Pássaros">Solar dos Pássaros</option>
-                            <option value="Horizonte Paulista">Horizonte Paulista</option>
-                        </select>
-                    </div>
+                <div>
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-400 mb-1">Perfil</label>
+                    <select id="nu-role" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border rounded-xl text-sm dark:text-white">
+                        <option value="analista">Analista / Repasse / CEHOP / Entrevista / Cartório</option>
+                        <option value="construtora">Construtora / Corretor</option>
+                        <option value="master">Diretor Master / Supervisor</option>
+                    </select>
                 </div>
-
                 <div>
                     <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-400 mb-2">Etapas Permitidas</label>
-                    <div id="stages-checkboxes-container" class="grid grid-cols-2 gap-2 bg-slate-50 dark:bg-slate-800 p-3 rounded-xl border border-slate-200 dark:border-slate-700 text-xs"></div>
+                    <div id="stages-checkboxes-container" class="grid grid-cols-2 gap-2 bg-slate-50 dark:bg-slate-800 p-3 rounded-xl border text-xs"></div>
                 </div>
-
                 <div class="flex justify-end space-x-3 pt-4 border-t border-slate-100 dark:border-slate-800">
-                    <button type="button" onclick="closeNewUserModal()" class="px-4 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs font-semibold rounded-xl transition">Cancelar</button>
-                    <button type="submit" class="px-5 py-2 bg-blue-900 hover:bg-blue-800 text-white text-xs font-semibold rounded-xl shadow transition">Salvar Usuário</button>
+                    <button type="button" onclick="closeNewUserModal()" class="px-4 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-700 dark:text-slate-300 text-xs font-semibold rounded-xl transition">Cancelar</button>
+                    <button type="submit" class="px-5 py-2 bg-blue-900 hover:bg-blue-800 text-white text-xs font-semibold rounded-xl shadow transition">Salvar</button>
                 </div>
             </form>
         </div>
@@ -489,65 +423,65 @@
                     <span id="det-id" class="text-xs font-mono text-blue-900 dark:text-blue-400 bg-blue-50 dark:bg-blue-950 px-2.5 py-1 rounded-lg">#000</span>
                     <h3 id="det-nome" class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white mt-1">Proponente</h3>
                 </div>
-                <button onclick="closeDetailsModal()" class="w-8 h-8 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 flex items-center justify-center text-slate-500 transition">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
+                <button onclick="closeDetailsModal()" class="w-8 h-8 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 flex items-center justify-center text-slate-500 transition"><i class="fa-solid fa-xmark"></i></button>
             </div>
 
             <div class="flex space-x-2 border-b border-slate-200 dark:border-slate-800 pb-2 mb-4 overflow-x-auto">
-                <button onclick="switchDetailTab('etapa')" id="dtab-etapa-btn" class="px-3 py-1.5 bg-blue-900 text-white text-xs font-semibold rounded-lg transition whitespace-nowrap">Gestão da Etapa</button>
-                <button onclick="switchDetailTab('docs')" id="dtab-docs-btn" class="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs font-semibold rounded-lg transition whitespace-nowrap">Central de Documentos</button>
-                <button onclick="switchDetailTab('chat')" id="dtab-chat-btn" class="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs font-semibold rounded-lg transition whitespace-nowrap">Chat</button>
-                <button onclick="switchDetailTab('logs')" id="dtab-logs-btn" class="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs font-semibold rounded-lg transition whitespace-nowrap">Histórico</button>
+                <button onclick="switchDetailTab('etapa')" id="dtab-etapa-btn" class="px-3 py-1.5 bg-blue-900 text-white text-xs font-semibold rounded-lg transition whitespace-nowrap">Gestão da Esteira</button>
+                <button onclick="switchDetailTab('docs')" id="dtab-docs-btn" class="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-700 dark:text-slate-300 text-xs font-semibold rounded-lg transition whitespace-nowrap">Documentos</button>
+                <button onclick="switchDetailTab('logs')" id="dtab-logs-btn" class="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-700 dark:text-slate-300 text-xs font-semibold rounded-lg transition whitespace-nowrap">Histórico</button>
             </div>
 
             <div class="flex-1 overflow-y-auto pr-1 space-y-4">
                 <div id="dtab-etapa-content" class="space-y-4">
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 bg-slate-50 dark:bg-slate-800/50 p-4 rounded-xl border border-slate-200 dark:border-slate-700 text-xs">
-                        <div><strong class="text-slate-500 dark:text-slate-400 block mb-1">CPF:</strong> <span id="det-cpf" class="font-medium text-slate-900 dark:text-white"></span></div>
-                        <div><strong class="text-slate-500 dark:text-slate-400 block mb-1">Empreendimento:</strong> <span id="det-empreendimento" class="font-medium text-slate-900 dark:text-white"></span></div>
-                        <div><strong class="text-slate-500 dark:text-slate-400 block mb-1">Valor VGF:</strong> <span id="det-valor" class="font-medium text-emerald-600 dark:text-emerald-400 font-bold"></span></div>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 bg-slate-50 dark:bg-slate-800/50 p-4 rounded-xl border text-xs">
+                        <div><strong class="text-slate-500 block mb-1">CPF:</strong> <span id="det-cpf" class="font-medium text-slate-900 dark:text-white"></span></div>
+                        <div><strong class="text-slate-500 block mb-1">Empreendimento:</strong> <span id="det-empreendimento" class="font-medium text-slate-900 dark:text-white"></span></div>
+                        <div><strong class="text-slate-500 block mb-1">Valor VGF:</strong> <span id="det-valor" class="font-medium text-emerald-600 font-bold"></span></div>
                     </div>
 
-                    <div id="etapa-specific-controls" class="bg-blue-50/50 dark:bg-blue-950/30 border border-blue-100 dark:border-blue-900/50 p-4 rounded-xl space-y-4"></div>
+                    <!-- CAIXA DE RETROCESSO / MOVIMENTAÇÃO LIVRE PARA ETAPAS ANTERIORES (Analistas, Supervisores e Diretores) -->
+                    <div id="retroceder-etapa-container" class="hidden p-4 bg-amber-50 dark:bg-amber-950/30 border border-amber-200 rounded-xl space-y-2">
+                        <strong class="text-xs font-bold text-amber-800 dark:text-amber-400 block"><i class="fa-solid fa-backward-step mr-1"></i> Retroceder ou Mover para Outra Etapa</strong>
+                        <p class="text-[11px] text-amber-700 dark:text-amber-300">Como Analista, Supervisor ou Diretor, você pode enviar esta pasta diretamente para qualquer etapa desejada:</p>
+                        <div class="flex gap-2">
+                            <select id="select-etapa-destino" class="flex-1 px-3 py-2 bg-white dark:bg-slate-800 border rounded-xl text-xs dark:text-white"></select>
+                            <button onclick="moverParaEtapaSelecionada()" class="px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white text-xs font-semibold rounded-xl shadow transition whitespace-nowrap">
+                                <i class="fa-solid fa-share mr-1"></i> Mover Pasta
+                            </button>
+                        </div>
+                    </div>
 
-                    <!-- BOTÃO GLOBAL DE DISTRATO EM TODAS AS ETAPAS -->
-                    <div class="p-3 bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-900/50 rounded-xl flex items-center justify-between">
+                    <div id="etapa-specific-controls" class="bg-blue-50/50 dark:bg-blue-950/30 border border-blue-100 p-4 rounded-xl space-y-4"></div>
+
+                    <!-- BOTÃO GLOBAL DE DISTRATO -->
+                    <div class="p-3 bg-red-50 dark:bg-red-950/30 border border-red-200 rounded-xl flex items-center justify-between">
                         <div>
-                            <strong class="text-xs font-bold text-red-700 dark:text-red-400 block">Ação Crítica de Processo</strong>
-                            <span class="text-[11px] text-red-600 dark:text-red-300">Deseja cancelar e mover este processo para a aba de Distratos?</span>
+                            <strong class="text-xs font-bold text-red-700 dark:text-red-400 block">Ação Crítica</strong>
+                            <span class="text-[11px] text-red-600 dark:text-red-300">Deseja cancelar e mover este processo para Distratos?</span>
                         </div>
                         <button onclick="marcarComoDistrato()" class="px-3 py-1.5 bg-red-600 hover:bg-red-700 text-white text-xs font-semibold rounded-lg shadow transition whitespace-nowrap">
                             <i class="fa-solid fa-ban mr-1"></i> Efetuar Distrato
                         </button>
                     </div>
 
-                    <div class="flex flex-col sm:flex-row justify-between items-center gap-2 pt-4 border-t border-slate-100 dark:border-slate-800">
-                        <div id="etapa-move-buttons" class="flex space-x-2 flex-wrap gap-y-2 w-full sm:w-auto"></div>
-                        <button onclick="saveProcessChanges()" class="w-full sm:w-auto px-4 py-2 bg-blue-900 hover:bg-blue-800 text-white text-xs font-semibold rounded-xl shadow transition whitespace-nowrap">Salvar Alterações</button>
+                    <div class="flex justify-end pt-4 border-t border-slate-100 dark:border-slate-800">
+                        <button onclick="saveProcessChanges()" class="px-5 py-2 bg-blue-900 hover:bg-blue-800 text-white text-xs font-semibold rounded-xl shadow transition whitespace-nowrap">Salvar e Avançar na Esteira</button>
                     </div>
                 </div>
 
                 <div id="dtab-docs-content" class="hidden space-y-4">
-                    <div class="bg-slate-50 dark:bg-slate-800/50 p-4 rounded-xl border border-slate-200 dark:border-slate-700">
-                        <h4 class="font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider mb-2">Enviar Novo Documento</h4>
+                    <div class="bg-slate-50 dark:bg-slate-800/50 p-4 rounded-xl border">
+                        <h4 class="font-bold text-xs uppercase tracking-wider mb-2">Anexar Documento</h4>
                         <div class="flex flex-col sm:flex-row gap-3">
-                            <input type="text" id="doc-title" placeholder="Nome do documento" class="flex-1 px-3 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-900">
-                            <input type="file" id="doc-file" class="text-xs text-slate-600 dark:text-slate-300">
-                            <button onclick="uploadDocument()" class="px-4 py-2 bg-blue-900 hover:bg-blue-800 text-white text-xs font-semibold rounded-xl transition whitespace-nowrap">Enviar</button>
+                            <input type="text" id="doc-title" placeholder="Nome do documento" class="flex-1 px-3 py-2 bg-white dark:bg-slate-800 border rounded-xl text-xs dark:text-white">
+                            <input type="file" id="doc-file" class="text-xs">
+                            <button onclick="uploadDocument()" class="px-4 py-2 bg-blue-900 text-white text-xs font-semibold rounded-xl transition whitespace-nowrap">Enviar</button>
                         </div>
                     </div>
                     <div>
-                        <h4 class="font-bold text-slate-900 dark:text-white text-xs uppercase tracking-wider mb-2">Documentos Anexados</h4>
+                        <h4 class="font-bold text-xs uppercase tracking-wider mb-2">Documentos Anexados</h4>
                         <div id="documents-list" class="space-y-2"></div>
-                    </div>
-                </div>
-
-                <div id="dtab-chat-content" class="hidden flex flex-col h-72">
-                    <div id="chat-messages" class="flex-1 overflow-y-auto space-y-3 p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-200 dark:border-slate-700 mb-3 text-xs"></div>
-                    <div class="flex space-x-2">
-                        <input type="text" id="chat-input" onkeypress="handleChatKeypress(event)" placeholder="Escreva uma mensagem..." class="flex-1 px-3 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-900">
-                        <button onclick="sendChatMessage()" class="px-4 py-2 bg-blue-900 hover:bg-blue-800 text-white text-xs font-semibold rounded-xl transition"><i class="fa-solid fa-paper-plane"></i></button>
                     </div>
                 </div>
 
@@ -558,75 +492,98 @@
         </div>
     </div>
 
-    <!-- JAVASCRIPT DO SISTEMA -->
+    <!-- SCRIPT DO SISTEMA -->
     <script>
+        const API_URL = 'api.php';
+
         const STAGES = [
-            { id: 'cadastro', name: 'Cadastro de Processos', slaLimitDays: 2 },
-            { id: 'analise1', name: '1ª Análise', slaLimitDays: 3 },
+            { id: 'cadastro', name: 'Cadastro de Processos / 1º Análise', slaLimitDays: 3 },
             { id: 'aguardando_venda', name: 'Aguardando Venda', slaLimitDays: 4 },
-            { id: 'venda_nova', name: 'Venda Nova', slaLimitDays: 3 },
-            { id: 'montagem_pasta', name: 'Montagem de Pasta', slaLimitDays: 5 },
+            { id: 'venda_nova', name: 'Venda Nova (Repasse)', slaLimitDays: 3 },
             { id: 'cehop', name: 'CEHOP', slaLimitDays: 4 },
             { id: 'entrevista', name: 'Entrevista Comercial', slaLimitDays: 4 },
-            { id: 'cartorio', name: 'Cartório', slaLimitDays: 7 },
-            { id: 'reprovados', name: 'Reprovados', slaLimitDays: 30 }
+            { id: 'cartorio', name: 'Registro em Cartório', slaLimitDays: 7 },
+            { id: 'reprovados', name: 'Reprovados / Reanálise', slaLimitDays: 30 }
         ];
 
         let USERS = [
             { cpf: '429.915.058-93', pass: 'Ladygaga7420@', name: 'Diretor Master', role: 'master', empreendimento: 'all', allowedStages: STAGES.map(s => s.id) },
-            { cpf: '111.111.111-11', pass: '123456', name: 'Analista de Crédito', role: 'analista', empreendimento: 'all', allowedStages: ['cadastro', 'analise1', 'cehop'] },
-            { cpf: '222.222.222-22', pass: '123456', name: 'Construtora Bella Vista', role: 'construtora', empreendimento: 'Residencial Bella Vista', allowedStages: ['entrevista', 'cartorio'] }
+            { cpf: '111.111.111-11', pass: '123456', name: 'Analista Credito / Repasse', role: 'analista', empreendimento: 'all', allowedStages: STAGES.map(s => s.id) },
+            { cpf: '222.222.222-22', pass: '123456', name: 'Construtora Tera', role: 'construtora', empreendimento: 'Residencial Tera', allowedStages: ['cadastro', 'aguardando_venda', 'venda_nova'] }
         ];
-        localStorage.setItem('dominio_users', JSON.stringify(USERS));
 
         let currentUser = null;
-        let processes = JSON.parse(localStorage.getItem('dominio_processes')) || [
-            {
-                id: 'DOM-1001',
-                nome: 'Carlos Eduardo Souza',
-                cpf: '333.444.555-69',
-                empreendimento: 'Residencial Bella Vista',
-                valor: '280.000,00',
-                obs: 'Cliente pré-aprovado Caixa.',
-                stage: 'entrevista',
-                subStatus: 'Contrato emitido',
-                isDistrato: false,
-                dataEmissaoContrato: '2026-10-15',
-                dataAssinaturaCliente: '',
-                obsCartorio: '',
-                dataResolucaoCartorio: '',
-                dataEntradaCartorio: '',
-                dataContratoRegistrado: '',
-                dataCriacao: '2026-10-01',
-                logs: [{ date: '01/10/2026 10:00', text: 'Processo cadastrado no sistema.' }],
-                chat: [{ user: 'Diretor Master', role: 'master', text: 'Documentação inicial validada.', time: '02/10/2026 11:00' }],
-                documents: []
-            }
-        ];
-
-        let notifications = JSON.parse(localStorage.getItem('dominio_notifications')) || [];
+        let processes = [];
         let activeProcessId = null;
 
-        window.addEventListener('DOMContentLoaded', () => {
+        window.addEventListener('DOMContentLoaded', async () => {
             const savedUser = localStorage.getItem('dominio_current_user');
             if (savedUser) {
                 currentUser = JSON.parse(savedUser);
+                await carregarProcessosDoServidor();
                 initApp();
             }
             buildStageCheckboxes();
             initTheme();
-            checkSLAAlerts();
         });
+
+        // Máscara automática de CPF / CNPJ
+        function maskCpfCnpj(input) {
+            let v = input.value.replace(/\D/g, '');
+            if (v.length <= 11) {
+                // CPF: 000.000.000-00
+                v = v.replace(/(\d{3})(\d)/, '$1.$2');
+                v = v.replace(/(\d{3})(\d)/, '$1.$2');
+                v = v.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+            } else {
+                // CNPJ: 00.000.000/0000-00
+                v = v.replace(/^(\d{2})(\d)/, '$1.$2');
+                v = v.replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3');
+                v = v.replace(/\.(\d{3})(\d)/, '.$1/$2');
+                v = v.replace(/(\d{4})(\d{1,2})$/, '$1-$2');
+            }
+            input.value = v;
+        }
+
+        async function carregarProcessosDoServidor() {
+            try {
+                const response = await fetch(`${API_URL}?action=get_processos`);
+                const data = await response.json();
+                if (Array.isArray(data)) {
+                    processes = data.map(p => ({
+                        id: p.id,
+                        nome: p.nome_proponente,
+                        cpf: p.cpf_proponente,
+                        empreendimento: p.empreendimento,
+                        valor: p.valor_vgf,
+                        stage: p.etapa_atual,
+                        subStatus: p.sub_status,
+                        responsavelAnalise: p.dados_json?.responsavelAnalise || '',
+                        isDistrato: p.is_distrato == 1,
+                        isFinalizado: p.is_finalizado == 1,
+                        dataCriacao: p.data_criacao,
+                        dadosAprovacao: p.dados_json?.dadosAprovacao || {},
+                        logs: p.dados_json?.logs || [],
+                        documents: p.dados_json?.documents || []
+                    }));
+                }
+            } catch (error) { console.error("Erro:", error); }
+        }
+
+        async function salvarProcessoNoBanco(processo) {
+            try {
+                await fetch(`${API_URL}?action=salvar_processo`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(processo)
+                });
+            } catch (error) { console.error("Erro:", error); }
+        }
 
         function initTheme() {
             const isDark = localStorage.getItem('dominio_dark') === 'true';
-            if (isDark) {
-                document.documentElement.classList.add('dark');
-                document.getElementById('theme-icon').className = 'fa-solid fa-sun';
-            } else {
-                document.documentElement.classList.remove('dark');
-                document.getElementById('theme-icon').className = 'fa-solid fa-moon';
-            }
+            document.documentElement.classList.toggle('dark', isDark);
+            document.getElementById('theme-icon').className = isDark ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
         }
 
         function toggleDarkMode() {
@@ -635,25 +592,7 @@
             document.getElementById('theme-icon').className = isDark ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
         }
 
-        function checkSLAAlerts() {
-            processes.forEach(p => {
-                if (p.isDistrato || p.stage === 'cartorio') return;
-                const stageObj = STAGES.find(s => s.id === p.stage);
-                if (!stageObj) return;
-
-                const diffDays = Math.floor((new Date() - new Date(p.dataCriacao)) / (1000 * 60 * 60 * 24));
-                if (diffDays >= stageObj.slaLimitDays) {
-                    const alertMsg = `SLA Estourado: Processo ${p.id} (${p.nome}) está há ${diffDays} dias na etapa ${stageObj.name}.`;
-                    if (!notifications.some(n => n.text === alertMsg)) {
-                        notifications.unshift({ text: alertMsg, time: new Date().toLocaleTimeString() });
-                    }
-                }
-            });
-            localStorage.setItem('dominio_notifications', JSON.stringify(notifications));
-            updateNotificationsBadge();
-        }
-
-        function handleLogin(e) {
+        async function handleLogin(e) {
             e.preventDefault();
             const cpfInput = document.getElementById('login-cpf').value.trim();
             const passInput = document.getElementById('login-pass').value.trim();
@@ -664,6 +603,7 @@
                 currentUser = found;
                 localStorage.setItem('dominio_current_user', JSON.stringify(currentUser));
                 errDiv.classList.add('hidden');
+                await carregarProcessosDoServidor();
                 initApp();
             } else {
                 errDiv.textContent = 'CPF/CNPJ ou senha incorretos.';
@@ -685,18 +625,10 @@
             document.getElementById('user-name-display').textContent = currentUser.name;
             document.getElementById('user-role-display').textContent = currentUser.role.toUpperCase();
             
-            const addUserBtn = document.getElementById('btn-add-user');
             const usersTabBtn = document.getElementById('tab-users-btn');
-
             if (currentUser.role === 'master') {
-                addUserBtn.classList.remove('hidden');
-                usersTabBtn.classList.remove('hidden');
-            } else if (currentUser.role === 'analista') {
-                addUserBtn.classList.add('hidden');
                 usersTabBtn.classList.remove('hidden');
             } else {
-                // Se for construtora, ocultamos completamente a aba de funcionários
-                addUserBtn.classList.add('hidden');
                 usersTabBtn.classList.add('hidden');
             }
 
@@ -704,63 +636,30 @@
             renderDashboard();
             renderUsersTable();
             renderDistratosTable();
-            updateNotificationsBadge();
+            renderFinalizadosTable();
         }
 
         function switchTab(tab) {
-            if (tab === 'users' && currentUser.role === 'construtora') return;
-
-            const kanbanBtn = document.getElementById('tab-kanban-btn');
-            const dashBtn = document.getElementById('tab-dashboard-btn');
-            const usersBtn = document.getElementById('tab-users-btn');
-            const distratosBtn = document.getElementById('tab-distratos-btn');
-            
-            const kanbanDiv = document.getElementById('tab-kanban');
-            const dashDiv = document.getElementById('tab-dashboard');
-            const usersDiv = document.getElementById('tab-users');
-            const distratosDiv = document.getElementById('tab-distratos');
-
-            kanbanBtn.className = 'px-3 sm:px-4 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs sm:text-sm font-semibold rounded-xl transition';
-            dashBtn.className = 'px-3 sm:px-4 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs sm:text-sm font-semibold rounded-xl transition';
-            if(usersBtn) usersBtn.className = 'px-3 sm:px-4 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs sm:text-sm font-semibold rounded-xl transition';
-            distratosBtn.className = 'px-3 sm:px-4 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs sm:text-sm font-semibold rounded-xl transition';
-            
-            kanbanDiv.classList.add('hidden');
-            dashDiv.classList.add('hidden');
-            usersDiv.classList.add('hidden');
-            distratosDiv.classList.add('hidden');
-
-            if (tab === 'kanban') {
-                kanbanBtn.className = 'px-3 sm:px-4 py-2 bg-blue-900 text-white text-xs sm:text-sm font-semibold rounded-xl shadow transition';
-                kanbanDiv.classList.remove('hidden');
-            } else if (tab === 'dashboard') {
-                dashBtn.className = 'px-3 sm:px-4 py-2 bg-blue-900 text-white text-xs sm:text-sm font-semibold rounded-xl shadow transition';
-                dashDiv.classList.remove('hidden');
-                renderDashboard();
-            } else if (tab === 'users' && currentUser.role !== 'construtora') {
-                usersBtn.className = 'px-3 sm:px-4 py-2 bg-blue-900 text-white text-xs sm:text-sm font-semibold rounded-xl shadow transition';
-                usersDiv.classList.remove('hidden');
-                renderUsersTable();
-            } else if (tab === 'distratos') {
-                distratosBtn.className = 'px-3 sm:px-4 py-2 bg-blue-900 text-white text-xs sm:text-sm font-semibold rounded-xl shadow transition';
-                distratosDiv.classList.remove('hidden');
-                renderDistratosTable();
-            }
+            if (tab === 'users' && currentUser.role !== 'master') return;
+            ['kanban', 'dashboard', 'users', 'distratos', 'finalizados'].forEach(t => {
+                document.getElementById(`tab-${t}-btn`).className = 'px-3 sm:px-4 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-700 dark:text-slate-200 text-xs sm:text-sm font-semibold rounded-xl transition';
+                document.getElementById(`tab-${t}`).classList.add('hidden');
+            });
+            document.getElementById(`tab-${tab}-btn`).className = 'px-3 sm:px-4 py-2 bg-blue-900 text-white text-xs sm:text-sm font-semibold rounded-xl shadow transition';
+            document.getElementById(`tab-${tab}`).classList.remove('hidden');
+            if (tab === 'dashboard') renderDashboard();
+            if (tab === 'users') renderUsersTable();
+            if (tab === 'distratos') renderDistratosTable();
+            if (tab === 'finalizados') renderFinalizadosTable();
         }
 
         function switchDetailTab(dtab) {
-            const tabs = ['etapa', 'docs', 'chat', 'logs'];
-            tabs.forEach(t => {
-                const btn = document.getElementById(`dtab-${t}-btn`);
-                const content = document.getElementById(`dtab-${t}-content`);
-                if (t === dtab) {
-                    btn.className = 'px-3 py-1.5 bg-blue-900 text-white text-xs font-semibold rounded-lg transition whitespace-nowrap';
-                    content.classList.remove('hidden');
-                } else {
-                    btn.className = 'px-3 py-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs font-semibold rounded-lg transition whitespace-nowrap';
-                    content.classList.add('hidden');
-                }
+            ['etapa', 'docs', 'logs'].forEach(t => {
+                document.getElementById(`dtab-${t}-btn`).className = 'px-3 py-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-700 dark:text-slate-300 text-xs font-semibold rounded-lg transition whitespace-nowrap';
+                document.getElementById(`dtab-${t}-content`).classList.add('hidden');
             });
+            document.getElementById(`dtab-${dtab}-btn`).className = 'px-3 py-1.5 bg-blue-900 text-white text-xs font-semibold rounded-lg transition whitespace-nowrap';
+            document.getElementById(`dtab-${dtab}-content`).classList.remove('hidden');
         }
 
         function buildStageCheckboxes() {
@@ -768,30 +667,28 @@
             if (!container) return;
             container.innerHTML = '';
             STAGES.forEach(s => {
-                container.innerHTML += `
-                    <label class="flex items-center space-x-2 cursor-pointer">
-                        <input type="checkbox" name="allowed-stage" value="${s.id}" checked class="rounded border-slate-300 dark:border-slate-600 text-blue-900 focus:ring-blue-900">
-                        <span class="text-slate-700 dark:text-slate-300">${s.name}</span>
-                    </label>
-                `;
+                container.innerHTML += `<label class="flex items-center space-x-2 cursor-pointer"><input type="checkbox" name="allowed-stage" value="${s.id}" checked class="rounded text-blue-900"><span>${s.name}</span></label>`;
             });
         }
 
         function calcularIdade(proponente) {
             const inputDate = document.getElementById(`np-${proponente}-nasc`).value;
             const spanIdade = document.getElementById(`np-${proponente}-idade`);
-            if (!inputDate) {
-                spanIdade.textContent = 'Idade: -- anos';
-                return;
-            }
+            if (!inputDate) { spanIdade.textContent = 'Idade: -- anos'; return; }
             const birthDate = new Date(inputDate);
             const today = new Date();
             let age = today.getFullYear() - birthDate.getFullYear();
             const m = today.getMonth() - birthDate.getMonth();
-            if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-                age--;
-            }
+            if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) age--;
             spanIdade.textContent = `Idade: ${age} anos`;
+        }
+
+        function formatCurrencyInput(input) {
+            let v = input.value.replace(/\D/g, '');
+            v = (v / 100).toFixed(2) + '';
+            v = v.replace(".", ",");
+            v = v.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+            input.value = v;
         }
 
         function renderKanban() {
@@ -800,64 +697,39 @@
             const searchTerm = document.getElementById('global-search').value.toLowerCase();
 
             STAGES.forEach(stage => {
-                if (currentUser.role !== 'master' && currentUser.allowedStages && !currentUser.allowedStages.includes(stage.id)) {
-                    return;
-                }
-
-                let stageProcesses = processes.filter(p => p.stage === stage.id && !p.isDistrato);
-                
-                if (currentUser.role === 'construtora') {
-                    stageProcesses = stageProcesses.filter(p => p.empreendimento === currentUser.empreendimento);
-                }
-
-                if (searchTerm) {
-                    stageProcesses = stageProcesses.filter(p => 
-                        p.nome.toLowerCase().includes(searchTerm) || 
-                        p.cpf.toLowerCase().includes(searchTerm) || 
-                        p.empreendimento.toLowerCase().includes(searchTerm) ||
-                        p.id.toLowerCase().includes(searchTerm)
-                    );
-                }
+                if (currentUser.role !== 'master' && currentUser.allowedStages && !currentUser.allowedStages.includes(stage.id)) return;
+                let stageProcesses = processes.filter(p => p.stage === stage.id && !p.isDistrato && !p.isFinalizado);
+                if (currentUser.role === 'construtora') stageProcesses = stageProcesses.filter(p => p.empreendimento === currentUser.empreendimento);
+                if (searchTerm) stageProcesses = stageProcesses.filter(p => p.nome.toLowerCase().includes(searchTerm) || p.cpf.toLowerCase().includes(searchTerm));
 
                 const col = document.createElement('div');
                 col.className = 'flex-shrink-0 w-80 bg-slate-200/70 dark:bg-slate-900/60 rounded-2xl p-4 flex flex-col max-h-[72vh] border border-slate-300 dark:border-slate-800';
                 col.innerHTML = `
                     <div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-300 dark:border-slate-800">
                         <span class="font-bold text-xs uppercase tracking-wider text-slate-700 dark:text-slate-300">${stage.name}</span>
-                        <span class="w-6 h-6 bg-white dark:bg-slate-800 text-blue-900 dark:text-blue-400 text-xs font-bold rounded-lg flex items-center justify-center shadow-sm">${stageProcesses.length}</span>
+                        <span class="w-6 h-6 bg-white dark:bg-slate-800 text-blue-900 dark:text-blue-400 text-xs font-bold rounded-lg flex items-center justify-center">${stageProcesses.length}</span>
                     </div>
                     <div class="flex-1 overflow-y-auto space-y-3 kanban-scroll pr-1" id="col-${stage.id}"></div>
                 `;
 
                 const cardsContainer = col.querySelector(`#col-${stage.id}`);
                 if (stageProcesses.length === 0) {
-                    cardsContainer.innerHTML = `<div class="p-4 text-center text-xs text-slate-400 dark:text-slate-500 bg-white/50 dark:bg-slate-800/30 rounded-xl border border-dashed border-slate-300 dark:border-slate-700">Nenhum processo</div>`;
+                    cardsContainer.innerHTML = `<div class="p-4 text-center text-xs text-slate-400 bg-white/50 dark:bg-slate-800/30 rounded-xl border border-dashed">Nenhum processo</div>`;
                 } else {
                     stageProcesses.forEach(p => {
                         const card = document.createElement('div');
-                        card.className = 'bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm hover:shadow-md transition border border-slate-200 dark:border-slate-700 cursor-pointer relative group';
+                        card.className = 'bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm hover:shadow-md transition border cursor-pointer';
                         card.onclick = () => openDetailsModal(p.id);
 
-                        const diffDays = Math.floor((new Date() - new Date(p.dataCriacao)) / (1000 * 60 * 60 * 24));
-                        let slaBadge = '';
-                        if (diffDays >= stage.slaLimitDays) {
-                            slaBadge = `<span class="bg-red-100 dark:bg-red-950 text-red-700 dark:text-red-300 text-[10px] font-bold px-2 py-0.5 rounded-full animate-pulse"><i class="fa-solid fa-triangle-exclamation mr-1"></i>${diffDays}d (Crítico)</span>`;
-                        } else if (diffDays >= stage.slaLimitDays - 1) {
-                            slaBadge = `<span class="bg-amber-100 dark:bg-amber-950 text-amber-700 dark:text-amber-300 text-[10px] font-bold px-2 py-0.5 rounded-full"><i class="fa-solid fa-clock mr-1"></i>${diffDays}d (Atenção)</span>`;
-                        } else {
-                            slaBadge = `<span class="bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 text-[10px] font-medium px-2 py-0.5 rounded-full">${diffDays}d</span>`;
-                        }
+                        let respTag = p.responsavelAnalise ? `<span class="bg-blue-50 text-blue-800 text-[10px] font-bold px-2 py-0.5 rounded-full"><i class="fa-solid fa-user-check mr-1"></i>${p.responsavelAnalise}</span>` : `<span class="bg-amber-50 text-amber-700 text-[10px] font-bold px-2 py-0.5 rounded-full"><i class="fa-solid fa-triangle-exclamation mr-1"></i>Sem responsável</span>`;
 
                         card.innerHTML = `
-                            <div class="flex items-center justify-between mb-2">
-                                <span class="text-[10px] font-mono text-blue-900 dark:text-blue-400 font-bold">${p.id}</span>
-                                ${slaBadge}
-                            </div>
+                            <div class="flex items-center justify-between mb-2"><span class="text-[10px] font-mono text-blue-900 dark:text-blue-400 font-bold">${p.id}</span>${respTag}</div>
                             <h4 class="font-bold text-slate-900 dark:text-white text-sm mb-1">${p.nome}</h4>
-                            <p class="text-xs text-slate-500 dark:text-slate-400 mb-2">${p.empreendimento}</p>
-                            <div class="flex items-center justify-between pt-2 border-t border-slate-100 dark:border-slate-700 text-xs">
-                                <span class="font-semibold text-emerald-600 dark:text-emerald-400">R$ ${p.valor}</span>
-                                <span class="text-[10px] text-slate-400 dark:text-slate-500">${p.subStatus || stage.name}</span>
+                            <p class="text-xs text-slate-500 mb-2">${p.empreendimento}</p>
+                            <div class="flex items-center justify-between pt-2 border-t text-xs">
+                                <span class="font-semibold text-emerald-600">R$ ${p.valor}</span>
+                                <span class="text-[10px] text-slate-400">${p.subStatus || stage.name}</span>
                             </div>
                         `;
                         cardsContainer.appendChild(card);
@@ -868,187 +740,69 @@
         }
 
         function filterKanban() { renderKanban(); }
-
         function openNewProcessModal() { document.getElementById('modal-novo').classList.remove('hidden'); }
         function closeNewProcessModal() { document.getElementById('modal-novo').classList.add('hidden'); }
-
-        function openNewUserModal() {
-            if (currentUser.role !== 'master') {
-                alert('Apenas o Diretor Master pode cadastrar novos usuários.');
-                return;
-            }
-            document.getElementById('user-modal-title').innerHTML = '<i class="fa-solid fa-user-plus text-blue-900 dark:text-blue-400 mr-2"></i>Cadastrar Funcionário';
-            document.getElementById('nu-index').value = '-1';
-            document.getElementById('nu-nome').value = '';
-            document.getElementById('nu-cpf').value = '';
-            document.getElementById('nu-pass').value = '';
-            document.getElementById('nu-role').value = 'analista';
-            document.getElementById('nu-empreendimento').value = 'all';
-            
-            document.querySelectorAll('input[name="allowed-stage"]').forEach(cb => cb.checked = true);
-            document.getElementById('modal-user').classList.remove('hidden');
-        }
-
-        function editUser(idx) {
-            if (currentUser.role !== 'master') {
-                alert('Apenas o Diretor Master pode editar usuários.');
-                return;
-            }
-            const u = USERS[idx];
-            document.getElementById('user-modal-title').innerHTML = '<i class="fa-solid fa-user-pen text-blue-900 dark:text-blue-400 mr-2"></i>Editar Funcionário';
-            document.getElementById('nu-index').value = idx;
-            document.getElementById('nu-nome').value = u.name;
-            document.getElementById('nu-cpf').value = u.cpf;
-            document.getElementById('nu-pass').value = u.pass;
-            document.getElementById('nu-role').value = u.role;
-            document.getElementById('nu-empreendimento').value = u.empreendimento || 'all';
-
-            document.querySelectorAll('input[name="allowed-stage"]').forEach(cb => {
-                cb.checked = u.allowedStages ? u.allowedStages.includes(cb.value) : true;
-            });
-
-            document.getElementById('modal-user').classList.remove('hidden');
-        }
-
+        function openNewUserModal() { document.getElementById('modal-user').classList.remove('hidden'); }
         function closeNewUserModal() { document.getElementById('modal-user').classList.add('hidden'); }
 
-        function formatCurrencyInput(input) {
-            let v = input.value.replace(/\D/g, '');
-            v = (v / 100).toFixed(2) + '';
-            v = v.replace(".", ",");
-            v = v.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-            input.value = v;
-        }
-
-        function handleNewProcess(e) {
+        async function handleNewProcess(e) {
             e.preventDefault();
             const newId = 'DOM-' + (1000 + processes.length + 1);
-            
-            const nomeP1 = document.getElementById('np-p1-nome').value;
-            const cpfP1 = document.getElementById('np-p1-cpf').value;
-            const empreendimento = document.getElementById('np-empreendimento').value;
-            const valor = document.getElementById('np-valor').value;
-            const obs = document.getElementById('np-obs').value;
-
             const newProc = {
                 id: newId,
-                nome: nomeP1,
-                cpf: cpfP1,
-                empreendimento,
-                valor,
-                obs,
+                nome: document.getElementById('np-p1-nome').value,
+                cpf: document.getElementById('np-p1-cpf').value,
+                empreendimento: document.getElementById('np-empreendimento').value,
+                valor: document.getElementById('np-valor').value,
+                obs: document.getElementById('np-obs').value,
                 stage: 'cadastro',
-                subStatus: '',
+                subStatus: 'Pasta enviada Para Analise',
+                responsavelAnalise: '',
                 isDistrato: false,
+                isFinalizado: false,
                 dataCriacao: new Date().toISOString().split('T')[0],
-                logs: [{ date: new Date().toLocaleString(), text: `Processo cadastrado por ${currentUser.name}` }],
-                chat: [],
+                dadosAprovacao: {},
+                logs: [{ date: new Date().toLocaleString(), text: `Pasta enviada Para Analise por ${currentUser.name}` }],
                 documents: []
             };
 
-            const fileInputs = [
-                { id: 'file-rg', title: 'Documento de Identificação' },
-                { id: 'file-renda', title: 'Comprovante de Renda' },
-                { id: 'file-endereco', title: 'Comprovante de Endereço' },
-                { id: 'file-ir', title: 'Declaração de Imposto de Renda' },
-                { id: 'file-matricula', title: 'Matrícula do Imóvel' },
-                { id: 'file-fgts', title: 'Extrato do FGTS' }
-            ];
-
-            let pendingFiles = fileInputs.filter(f => document.getElementById(f.id).files[0]);
-            if (pendingFiles.length === 0) {
-                finalizeNewProcess(newProc);
-                return;
-            }
-
-            let loadedCount = 0;
-            pendingFiles.forEach(fObj => {
-                const file = document.getElementById(fObj.id).files[0];
-                const reader = new FileReader();
-                reader.onload = function(evt) {
-                    newProc.documents.push({
-                        title: fObj.title,
-                        name: file.name,
-                        data: evt.target.result,
-                        date: new Date().toLocaleString()
-                    });
-                    loadedCount++;
-                    if (loadedCount === pendingFiles.length) {
-                        finalizeNewProcess(newProc);
-                    }
-                };
-                reader.readAsDataURL(file);
-            });
-        }
-
-        function finalizeNewProcess(newProc) {
             processes.unshift(newProc);
-            saveData();
+            await salvarProcessoNoBanco(newProc);
             closeNewProcessModal();
             document.getElementById('modal-novo').querySelector('form').reset();
             renderKanban();
-            addNotification(`Novo processo ${newProc.id} cadastrado.`);
+            alert('Pasta enviada Para Analise');
         }
 
         function handleSaveUser(e) {
             e.preventDefault();
-            if (currentUser.role !== 'master') {
-                alert('Apenas o Diretor Master pode salvar alterações de usuários.');
-                return;
-            }
-
-            const idx = parseInt(document.getElementById('nu-index').value);
             const nome = document.getElementById('nu-nome').value;
             const cpf = document.getElementById('nu-cpf').value;
             const pass = document.getElementById('nu-pass').value;
             const role = document.getElementById('nu-role').value;
-            const empreendimento = document.getElementById('nu-empreendimento').value;
-
             const allowedStages = [];
-            document.querySelectorAll('input[name="allowed-stage"]:checked').forEach(cb => {
-                allowedStages.push(cb.value);
-            });
+            document.querySelectorAll('input[name="allowed-stage"]:checked').forEach(cb => allowedStages.push(cb.value));
 
-            if (idx === -1) {
-                if (USERS.some(u => u.cpf === cpf)) {
-                    alert('Já existe um usuário cadastrado com este CPF/CNPJ.');
-                    return;
-                }
-                USERS.push({ cpf, pass, name: nome, role, empreendimento, allowedStages });
-            } else {
-                USERS[idx] = { cpf, pass, name: nome, role, empreendimento, allowedStages };
-            }
-
-            localStorage.setItem('dominio_users', JSON.stringify(USERS));
+            USERS.push({ cpf, pass, name: nome, role, empreendimento: 'all', allowedStages });
             closeNewUserModal();
             renderUsersTable();
-            alert('Usuário salvo com sucesso!');
+            alert('Permissões de usuário salvas com sucesso!');
         }
 
         function renderUsersTable() {
             const tbody = document.getElementById('users-table-body');
             if (!tbody) return;
             tbody.innerHTML = '';
-
-            USERS.forEach((u, idx) => {
-                const stagesNames = u.allowedStages ? u.allowedStages.map(sId => STAGES.find(s => s.id === sId)?.name).filter(Boolean).join(', ') : 'Todas';
-                
-                const tr = document.createElement('tr');
-                tr.className = 'hover:bg-slate-50 dark:hover:bg-slate-800 transition';
-                tr.innerHTML = `
-                    <td class="p-3 font-semibold text-slate-900 dark:text-white">${u.name}</td>
-                    <td class="p-3 font-mono text-slate-600 dark:text-slate-400">${u.cpf}</td>
-                    <td class="p-3 font-mono text-blue-900 dark:text-blue-400 font-bold">${u.pass}</td>
-                    <td class="p-3"><span class="px-2 py-0.5 bg-blue-50 dark:bg-blue-950 text-blue-900 dark:text-blue-300 rounded-full font-medium text-[10px]">${u.role.toUpperCase()}</span></td>
-                    <td class="p-3 text-slate-600 dark:text-slate-400 max-w-xs truncate" title="${stagesNames}">${stagesNames}</td>
-                    <td class="p-3 text-right space-x-1">
-                        ${currentUser.role === 'master' ? `
-                            <button onclick="editUser(${idx})" class="p-1.5 bg-blue-50 dark:bg-blue-950 text-blue-700 dark:text-blue-400 rounded-lg hover:bg-blue-100 transition" title="Editar"><i class="fa-solid fa-pen text-xs"></i></button>
-                            ${u.cpf !== '429.915.058-93' ? `<button onclick="deleteUser(${idx})" class="p-1.5 bg-red-50 dark:bg-red-950 text-red-600 dark:text-red-400 rounded-lg hover:bg-red-100 transition" title="Excluir"><i class="fa-solid fa-trash text-xs"></i></button>` : ''}
-                        ` : '<span class="text-[10px] text-slate-400">Somente Diretor</span>'}
-                    </td>
+            USERS.forEach((u) => {
+                tbody.innerHTML += `
+                    <tr class="hover:bg-slate-50 dark:hover:bg-slate-800 transition">
+                        <td class="p-3 font-semibold">${u.name}</td>
+                        <td class="p-3 font-mono">${u.cpf}</td>
+                        <td class="p-3 font-mono text-blue-900">${u.pass}</td>
+                        <td class="p-3"><span class="px-2 py-0.5 bg-blue-50 text-blue-900 rounded-full text-[10px]">${u.role.toUpperCase()}</span></td>
+                        <td class="p-3 text-right">Diretor Master (Ativo)</td>
+                    </tr>
                 `;
-                tbody.appendChild(tr);
             });
         }
 
@@ -1056,59 +810,42 @@
             const tbody = document.getElementById('distratos-table-body');
             const badgeCount = document.getElementById('distrato-count-badge');
             if (!tbody) return;
-
             const distratosList = processes.filter(p => p.isDistrato);
             badgeCount.textContent = distratosList.length;
-
             if (distratosList.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="7" class="p-6 text-center text-slate-400 dark:text-slate-500">Nenhum processo distratado registrado.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="6" class="p-6 text-center text-slate-400">Nenhum processo distratado.</td></tr>`;
                 return;
             }
-
             tbody.innerHTML = '';
             distratosList.forEach(p => {
-                const stageOrigem = STAGES.find(s => s.id === p.stage)?.name || p.stage;
-                const tr = document.createElement('tr');
-                tr.className = 'hover:bg-slate-50 dark:hover:bg-slate-800 transition';
-                tr.innerHTML = `
-                    <td class="p-3 font-mono font-bold text-red-600 dark:text-red-400">${p.id}</td>
-                    <td class="p-3 font-semibold text-slate-900 dark:text-white">${p.nome}</td>
-                    <td class="p-3 font-mono text-slate-600 dark:text-slate-400">${p.cpf}</td>
-                    <td class="p-3 text-slate-600 dark:text-slate-400">${p.empreendimento}</td>
-                    <td class="p-3 font-semibold text-emerald-600 dark:text-emerald-400">R$ ${p.valor}</td>
-                    <td class="p-3"><span class="px-2 py-0.5 bg-red-100 dark:bg-red-950 text-red-700 dark:text-red-300 rounded-full font-medium text-[10px]">${stageOrigem}</span></td>
-                    <td class="p-3 text-right">
-                        <button onclick="openDetailsModal('${p.id}')" class="px-3 py-1 bg-blue-900 text-white rounded-lg hover:bg-blue-800 transition text-xs">Ver Detalhes</button>
-                    </td>
-                `;
-                tbody.appendChild(tr);
+                tbody.innerHTML += `<tr><td class="p-3 font-mono text-red-600">${p.id}</td><td class="p-3 font-semibold">${p.nome}</td><td class="p-3 font-mono">${p.cpf}</td><td class="p-3">${p.empreendimento}</td><td class="p-3 font-semibold text-emerald-600">R$ ${p.valor}</td><td class="p-3 text-right"><button onclick="openDetailsModal('${p.id}')" class="px-3 py-1 bg-blue-900 text-white rounded-lg text-xs">Ver</button></td></tr>`;
             });
         }
 
-        function marcarComoDistrato() {
+        function renderFinalizadosTable() {
+            const tbody = document.getElementById('finalizados-table-body');
+            if (!tbody) return;
+            const finList = processes.filter(p => p.isFinalizado);
+            if (finList.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" class="p-6 text-center text-slate-400">Nenhum processo finalizado.</td></tr>`;
+                return;
+            }
+            tbody.innerHTML = '';
+            finList.forEach(p => {
+                tbody.innerHTML += `<tr><td class="p-3 font-mono text-emerald-600">${p.id}</td><td class="p-3 font-semibold">${p.nome}</td><td class="p-3 font-mono">${p.cpf}</td><td class="p-3">${p.empreendimento}</td><td class="p-3">Contrato Registrado</td><td class="p-3 text-right"><button onclick="gerarMatrizPDF('${p.id}')" class="px-3 py-1 bg-emerald-600 text-white rounded-lg text-xs"><i class="fa-solid fa-file-pdf mr-1"></i> Baixar Relatório PDF</button></td></tr>`;
+            });
+        }
+
+        async function marcarComoDistrato() {
             const p = processes.find(x => x.id === activeProcessId);
             if (!p) return;
-
-            if (confirm(`Deseja realmente marcar o processo ${p.id} (${p.nome}) como DISTRATO? Ele sairá da esteira e será movido permanentemente para a aba de Distratos.`)) {
+            if (confirm(`Deseja realmente marcar ${p.id} como DISTRATO?`)) {
                 p.isDistrato = true;
                 p.logs.push({ date: new Date().toLocaleString(), text: `Processo marcado como DISTRATO por ${currentUser.name}` });
-                saveData();
+                await salvarProcessoNoBanco(p);
                 closeDetailsModal();
                 renderKanban();
                 renderDistratosTable();
-                addNotification(`Processo ${p.id} movido para Distratos.`);
-            }
-        }
-
-        function deleteUser(idx) {
-            if (currentUser.role !== 'master') {
-                alert('Apenas o Diretor Master pode excluir usuários.');
-                return;
-            }
-            if (confirm('Deseja realmente excluir este usuário?')) {
-                USERS.splice(idx, 1);
-                localStorage.setItem('dominio_users', JSON.stringify(USERS));
-                renderUsersTable();
             }
         }
 
@@ -1123,9 +860,23 @@
             document.getElementById('det-empreendimento').textContent = p.empreendimento;
             document.getElementById('det-valor').textContent = 'R$ ' + p.valor;
 
+            // Configurar painel de retrocesso de etapas para Analistas, Supervisores e Diretores
+            const retroContainer = document.getElementById('retroceder-etapa-container');
+            if (currentUser.role === 'analista' || currentUser.role === 'master') {
+                retroContainer.classList.remove('hidden');
+                const selectDestino = document.getElementById('select-etapa-destino');
+                selectDestino.innerHTML = '';
+                STAGES.forEach(s => {
+                    if (s.id !== p.stage) {
+                        selectDestino.innerHTML += `<option value="${s.id}">${s.name}</option>`;
+                    }
+                });
+            } else {
+                retroContainer.classList.add('hidden');
+            }
+
             renderStageControls(p);
             renderDocumentsList();
-            renderChatMessages();
             renderAuditLogs();
 
             switchDetailTab('etapa');
@@ -1137,211 +888,333 @@
             activeProcessId = null;
         }
 
+        async function moverParaEtapaSelecionada() {
+            const p = processes.find(x => x.id === activeProcessId);
+            if (!p) return;
+            const novaEtapaId = document.getElementById('select-etapa-destino').value;
+            const etapaObj = STAGES.find(s => s.id === novaEtapaId);
+            if (!etapaObj) return;
+
+            if (confirm(`Deseja mover o processo ${p.id} para a etapa "${etapaObj.name}"?`)) {
+                const etapaAntiga = p.stage;
+                p.stage = novaEtapaId;
+                p.subStatus = `Movido manualmente para ${etapaObj.name}`;
+                p.logs.push({ date: new Date().toLocaleString(), text: `Processo retrocedido/movido de [${etapaAntiga}] para [${etapaObj.name}] por ${currentUser.name}` });
+                await salvarProcessoNoBanco(p);
+                renderKanban();
+                alert(`Processo movido com sucesso para ${etapaObj.name}!`);
+                closeDetailsModal();
+            }
+        }
+
         function renderStageControls(p) {
             const controlsDiv = document.getElementById('etapa-specific-controls');
-            const moveDiv = document.getElementById('etapa-move-buttons');
             controlsDiv.innerHTML = '';
-            moveDiv.innerHTML = '';
 
-            let htmlControls = '';
-            if (p.isDistrato) {
-                htmlControls = `<div class="p-3 bg-red-100 dark:bg-red-950/60 text-red-800 dark:text-red-300 rounded-xl font-bold text-center">Este processo está atualmente em DISTRATO.</div>`;
-            } else if (p.stage === 'analise1') {
-                htmlControls = `
-                    <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Parecer da 1ª Análise:</label>
-                    <select id="ctrl-analise-status" class="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs dark:text-white">
-                        <option value="aprovado">Aprovar 1ª Análise</option>
-                        <option value="reprovado">Reprovar (Com pendência)</option>
-                    </select>
+            // Restrição de Permissão: Construtora só edita na fase inicial ou aguardando venda
+            if (currentUser.role === 'construtora' && p.stage !== 'cadastro' && p.stage !== 'aguardando_venda') {
+                controlsDiv.innerHTML = `<div class="p-3 bg-amber-50 text-amber-800 rounded-xl text-xs font-bold text-center">Pasta em análise. Permissão apenas para consulta de status.</div>`;
+                return;
+            }
+
+            let html = '';
+            if (p.stage === 'cadastro') {
+                html += `
+                    <div class="p-3 bg-white dark:bg-slate-800 rounded-xl border mb-3">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-xs font-bold text-blue-900">Analista Responsável:</span>
+                            <span class="text-xs font-semibold">${p.responsavelAnalise || 'Não atribuído'}</span>
+                        </div>
+                        ${!p.responsavelAnalise && currentUser.role === 'analista' ? `<button onclick="atribuirAnalista('${p.id}')" class="w-full py-1.5 bg-blue-900 text-white rounded-lg text-xs font-semibold">Atribuir Tarefa para Mim</button>` : ''}
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold mb-1">Decisão da 1ª Análise:</label>
+                        <select id="ctrl-analise-status" onchange="toggleAnaliseFields(this.value)" class="w-full px-3 py-2 bg-white dark:bg-slate-800 border rounded-xl text-xs">
+                            <option value="aprovado">Aprovar Processo</option>
+                            <option value="aprovado_pendencia">Aprovado com Pendência</option>
+                            <option value="reprovado">Reprovar Processo</option>
+                        </select>
+                    </div>
+
+                    <!-- Campos de Aprovação -->
+                    <div id="campos-aprovacao" class="space-y-3 p-4 bg-emerald-50 border border-emerald-200 rounded-xl mt-3">
+                        <h4 class="font-bold text-emerald-800 text-xs uppercase"><i class="fa-solid fa-file-invoice-dollar mr-1"></i>Dados de Aprovação Obrigatórios</h4>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                            <div><label class="block font-semibold mb-1">Valor do Imóvel Aprovado (R$)</label><input type="text" id="aprov-imovel" value="${p.dadosAprovacao.imovel || p.valor}" class="w-full px-3 py-2 bg-white border rounded-xl" oninput="formatCurrencyInput(this)"></div>
+                            <div><label class="block font-semibold mb-1">Valor do Financiamento Aprovado (R$)</label><input type="text" id="aprov-fin" value="${p.dadosAprovacao.fin || ''}" class="w-full px-3 py-2 bg-white border rounded-xl" oninput="formatCurrencyInput(this)"></div>
+                            <div><label class="block font-semibold mb-1">Valor de FGTS (R$)</label><input type="text" id="aprov-fgts" value="${p.dadosAprovacao.fgts || ''}" class="w-full px-3 py-2 bg-white border rounded-xl" oninput="formatCurrencyInput(this)"></div>
+                            <div><label class="block font-semibold mb-1">Subsídio Casa Paulista (R$)</label><input type="text" id="aprov-sub-cp" value="${p.dadosAprovacao.subCP || ''}" class="w-full px-3 py-2 bg-white border rounded-xl" oninput="formatCurrencyInput(this)"></div>
+                            <div><label class="block font-semibold mb-1">Subsídio Federal (R$)</label><input type="text" id="aprov-sub-fed" value="${p.dadosAprovacao.subFed || ''}" class="w-full px-3 py-2 bg-white border rounded-xl" oninput="formatCurrencyInput(this)"></div>
+                            <div><label class="block font-semibold mb-1">Renda dos Proponentes</label><input type="text" id="aprov-rendas" value="${p.dadosAprovacao.rendas || ''}" placeholder="Ex: 2.500,25" class="w-full px-3 py-2 bg-white border rounded-xl"></div>
+                            <div><label class="block font-semibold mb-1">Quantidade de Meses Aprovados</label><input type="number" id="aprov-prazo" value="${p.dadosAprovacao.prazo || '360'}" class="w-full px-3 py-2 bg-white border rounded-xl"></div>
+                        </div>
+                        <div><label class="block font-semibold text-xs mb-1">Anexar Simulação do Financiamento (Obrigatório)</label><input type="file" id="aprov-file-simulacao" class="text-xs"></div>
+                        <button onclick="gerarMatrizPDF('${p.id}')" class="w-full py-2 bg-blue-900 text-white rounded-xl text-xs font-semibold"><i class="fa-solid fa-file-pdf mr-1"></i> Gerar Matriz em PDF</button>
+                    </div>
+
+                    <!-- Campos de Reprovação -->
+                    <div id="campos-reprovacao" class="hidden space-y-3 p-4 bg-red-50 border border-red-200 rounded-xl mt-3">
+                        <label class="block font-semibold text-red-700 text-xs mb-1">Motivo da Reprova:</label>
+                        <select id="reprova-motivo" class="w-full px-3 py-2 bg-white border rounded-xl text-xs">
+                            <option value="Documento de identificação">Documento de identificação</option>
+                            <option value="Restrição Externa">Restrição Externa</option>
+                            <option value="Proponente Possui Dividas baixadas como Prejuízo no SCR">Proponente Possui Dívidas baixadas como Prejuízo no SCR</option>
+                            <option value="Pendência Interna">Pendência Interna</option>
+                            <option value="Elevado compromissos financeiros SCR">Elevado compromissos financeiros SCR</option>
+                            <option value="Contratos Habitacionais Ativos">Contratos Habitacionais Ativos</option>
+                        </select>
+                    </div>
+
+                    <div class="mt-3">
+                        <label class="block text-xs font-semibold mb-1">Status COMANDO AGENCIA:</label>
+                        <input type="text" id="ctrl-comando-agencia" value="${p.subStatus || ''}" placeholder="COMANDO AGENCIA" class="w-full px-3 py-2 bg-white border rounded-xl text-xs">
+                    </div>
+                `;
+            } else if (p.stage === 'aguardando_venda') {
+                html += `
+                    <div class="space-y-3">
+                        <div class="p-3 bg-emerald-50 text-emerald-800 rounded-xl text-xs font-semibold">Processo aprovado! Aguardando o corretor anexar o contrato assinado com o cliente.</div>
+                        <div><label class="block font-semibold text-xs mb-1">Anexar Contrato Assinado com o Cliente (Obrigatório):</label><input type="file" id="venda-contrato-file" class="text-xs"></div>
+                    </div>
+                `;
+            } else if (p.stage === 'venda_nova') {
+                html += `
+                    <div class="space-y-3">
+                        <label class="block text-xs font-semibold mb-1">Status no Repasse:</label>
+                        <select id="ctrl-repasse-status" onchange="toggleRepasseSubFields(this.value)" class="w-full px-3 py-2 bg-white border rounded-xl text-xs">
+                            <option value="Em Montagem de Pasta">Em Montagem de Pasta</option>
+                            <option value="Aguardando Pendencia Documental">Aguardando Pendencia Documental</option>
+                            <option value="Aguardando Matricula Atualizada">Aguardando Matricula Atualizada</option>
+                            <option value="Aguardando Débito FGTS">Aguardando Débito FGTS</option>
+                            <option value="Aguardando assintura de Formulários">Aguardando assintura de Formulários</option>
+                            <option value="Erro de DÉBITO DE FGTS">Erro de DÉBITO DE FGTS</option>
+                            <option value="Pendencia SCR BANCEN">Pendencia SCR BANCEN</option>
+                            <option value="Pendencia Registrato">Pendencia Registrato</option>
+                            <option value="Pendencia de Documento de Risidência">Pendencia de Documento de Risidência</option>
+                            <option value="Imposto de Renda">Imposto de Renda</option>
+                            <option value="Assinado Formulários">Assinado Formulários (Envia p/ CEHOP)</option>
+                        </select>
+                        <div id="repasse-dinamic-field"></div>
+                    </div>
+                `;
+            } else if (p.stage === 'cehop') {
+                html += `
+                    <div class="space-y-3">
+                        <label class="block text-xs font-semibold mb-1">Status CEHOP:</label>
+                        <select id="ctrl-cehop-status" onchange="toggleCehopFields(this.value)" class="w-full px-3 py-2 bg-white border rounded-xl text-xs">
+                            <option value="Em CEHOP">Em andamento</option>
+                            <option value="Aguardando Casa Paulista">Aguardando Casa Paulista</option>
+                            <option value="Erro do Siopi">Erro do Siopi</option>
+                            <option value="Troca de Unidade">Troca de Unidade</option>
+                            <option value="Atualização de Valores da Unidade">Atualização de Valores da Unidade</option>
+                            <option value="Aguardando Conformidade">Aguardando Conformidade (Avança p/ Entrevista)</option>
+                        </select>
+                        <div id="cehop-dinamic-field"></div>
+                    </div>
                 `;
             } else if (p.stage === 'entrevista') {
-                htmlControls = `
+                html += `
                     <div class="space-y-3">
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Status da Entrevista Comercial:</label>
-                            <select id="ctrl-entrevista-status" onchange="toggleEntrevistaFields(this.value)" class="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs dark:text-white">
-                                <option value="Contrato emitido" ${p.subStatus==='Contrato emitido'?'selected':''}>Contrato emitido</option>
-                                <option value="Aguardando Liberação de contrato construtora" ${p.subStatus==='Aguardando Liberação de contrato construtora'?'selected':''}>Aguardando Liberação de contrato construtora</option>
-                                <option value="Contrato Assinado Cliente" ${p.subStatus==='Contrato Assinado Cliente'?'selected':''}>Contrato Assinado Cliente (Avança para Cartório)</option>
-                            </select>
-                        </div>
-                        <div id="field-data-emissao" class="${p.subStatus==='Contrato emitido'?'':'hidden'}">
-                            <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Data de Emissão do Contrato:</label>
-                            <input type="date" id="ctrl-data-emissao" value="${p.dataEmissaoContrato || ''}" class="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs dark:text-white">
-                        </div>
-                        <div id="field-data-assinatura" class="${p.subStatus==='Contrato Assinado Cliente'?'':'hidden'}">
-                            <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Data de Assinatura do Cliente:</label>
-                            <input type="date" id="ctrl-data-assinatura" value="${p.dataAssinaturaCliente || ''}" class="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs dark:text-white">
-                        </div>
+                        <label class="block text-xs font-semibold mb-1">Status Entrevista Comercial:</label>
+                        <select id="ctrl-entrevista-status" onchange="toggleEntrevistaFields(this.value)" class="w-full px-3 py-2 bg-white border rounded-xl text-xs">
+                            <option value="Em agendamento">Em agendamento</option>
+                            <option value="Aguardando Extratos Bancários">Aguardando Extratos Bancários</option>
+                            <option value="Aguardando agenda">Aguardando agenda</option>
+                            <option value="Aguardando liberação construtora">Aguardando liberação construtora</option>
+                            <option value="Aguardando assinatura Cliente">Aguardando assinatura Cliente</option>
+                            <option value="Contrato Assinado Cliente">Contrato Assinado Cliente (Avança p/ Cartório)</option>
+                        </select>
+                        <div id="entrevista-dinamic-field"></div>
                     </div>
                 `;
             } else if (p.stage === 'cartorio') {
-                htmlControls = `
+                html += `
                     <div class="space-y-3">
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Sub-status do Cartório:</label>
-                            <select id="ctrl-cartorio-sub" onchange="toggleCartorioFields(this.value)" class="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs dark:text-white">
-                                <option value="1 Entrada no Cartório" ${p.subStatus==='1 Entrada no Cartório'?'selected':''}>1 Entrada no Cartório</option>
-                                <option value="2 Contrato Registrado" ${p.subStatus==='2 Contrato Registrado'?'selected':''}>2 Contrato Registrado</option>
-                                <option value="3 Contrato com Pendência em Cartório" ${p.subStatus==='3 Contrato com Pendência em Cartório'?'selected':''}>3 Contrato com Pendência em Cartório</option>
-                                <option value="4 Aguardando pagamento de ITBI" ${p.subStatus==='4 Aguardando pagamento de ITBI'?'selected':''}>4 Aguardando pagamento de ITBI</option>
-                                <option value="5 Aguardando pagamento de Custas cartorárias" ${p.subStatus==='5 Aguardando pagamento de Custas cartorárias'?'selected':''}>5 Aguardando pagamento de Custas cartorárias</option>
-                                <option value="6 Contrato Registrado em Cartório" ${p.subStatus==='6 Contrato Registrado em Cartório'?'selected':''}>6 Contrato Registrado em Cartório (Finalizar)</option>
-                            </select>
-                        </div>
-                        <div id="cartorio-fields-container" class="space-y-3"></div>
-                        <div class="pt-2">
-                            <button onclick="generateCartorioPDFReport('${p.id}')" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-xl shadow transition flex items-center justify-center space-x-2">
-                                <i class="fa-solid fa-file-pdf"></i>
-                                <span>Gerar Relatório Completo do Processo (PDF / Impressão)</span>
-                            </button>
-                        </div>
+                        <label class="block text-xs font-semibold mb-1">Status Cartório:</label>
+                        <select id="ctrl-cartorio-status" onchange="toggleCartorioFields(this.value)" class="w-full px-3 py-2 bg-white border rounded-xl text-xs">
+                            <option value="Entrada de Registro em Cartório">Entrada de Registro em Cartório</option>
+                            <option value="Aguardando pagamento de ITBI">Aguardando pagamento de ITBI</option>
+                            <option value="Aguardando Isenção de ITBI">Aguardando Isenção de ITBI</option>
+                            <option value="Aguardando pagamento de Custas de Cartório">Aguardando pagamento de Custas de Cartório</option>
+                            <option value="Aguardando Registro do Contrato">Aguardando Registro do Contrato</option>
+                            <option value="Contrato Registrado">Contrato Registrado (Finaliza e Gera PDF)</option>
+                            <option value="Pendencia Cartório">Pendencia Cartório</option>
+                        </select>
+                        <div id="cartorio-dinamic-field"></div>
                     </div>
                 `;
             } else {
-                htmlControls = `<p class="text-xs text-slate-500 dark:text-slate-400">Etapa atual sem restrições especiais. Use os botões abaixo para avançar.</p>`;
+                html += `<p class="text-xs text-slate-500">Etapa padrão.</p>`;
             }
 
-            controlsDiv.innerHTML = htmlControls;
-            if(p.stage === 'cartorio' && !p.isDistrato) {
-                toggleCartorioFields(document.getElementById('ctrl-cartorio-sub').value);
-            }
+            controlsDiv.innerHTML = html;
+        }
 
-            if (!p.isDistrato) {
-                const currentIndex = STAGES.findIndex(s => s.id === p.stage);
-                if (currentIndex > 0 && p.stage !== 'reprovados') {
-                    const prevStage = STAGES[currentIndex - 1];
-                    moveDiv.innerHTML += `<button onclick="moveProcess('${prevStage.id}')" class="px-3 py-2 bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs font-semibold rounded-xl transition"><i class="fa-solid fa-arrow-left mr-1"></i> ${prevStage.name}</button>`;
-                }
-                if (currentIndex < STAGES.length - 2 && p.stage !== 'reprovados') {
-                    const nextStage = STAGES[currentIndex + 1];
-                    moveDiv.innerHTML += `<button onclick="moveProcess('${nextStage.id}')" class="px-3 py-2 bg-blue-900 hover:bg-blue-800 text-white text-xs font-semibold rounded-xl transition">${nextStage.name} <i class="fa-solid fa-arrow-right ml-1"></i></button>`;
-                }
-            }
+        async function atribuirAnalista(id) {
+            const p = processes.find(x => x.id === id);
+            if (!p) return;
+            p.responsavelAnalise = currentUser.name;
+            p.logs.push({ date: new Date().toLocaleString(), text: `Tarefa atribuída para ${currentUser.name}` });
+            await salvarProcessoNoBanco(p);
+            openDetailsModal(id);
+            renderKanban();
+        }
+
+        function toggleAnaliseFields(val) {
+            document.getElementById('campos-aprovacao').classList.toggle('hidden', val === 'reprovado');
+            document.getElementById('campos-reprovacao').classList.toggle('hidden', val !== 'reprovado');
+        }
+
+        function toggleRepasseSubFields(val) {
+            const container = document.getElementById('repasse-dinamic-field');
+            if (val === 'Aguardando Débito FGTS') {
+                container.innerHTML = `<label class="block text-xs font-semibold mt-2 mb-1">Data:</label><input type="date" id="rep-data-fgts" class="w-full px-3 py-2 border rounded-xl text-xs">`;
+            } else if (val === 'Aguardando Pendencia Documental' || val === 'Aguardando Matricula Atualizada') {
+                container.innerHTML = `<label class="block text-xs font-semibold mt-2 mb-1">Observação:</label><textarea id="rep-obs-pendencia" rows="2" class="w-full px-3 py-2 border rounded-xl text-xs"></textarea>`;
+            } else if (val === 'Assinado Formulários') {
+                container.innerHTML = `<label class="block text-xs font-semibold mt-2 mb-1">Anexar Formulários Assinados e Termo de Ciência:</label><input type="file" id="rep-file-forms" class="text-xs">`;
+            } else { container.innerHTML = ''; }
+        }
+
+        function toggleCehopFields(val) {
+            const container = document.getElementById('cehop-dinamic-field');
+            if (val === 'Aguardando Conformidade') {
+                container.innerHTML = `<label class="block text-xs font-semibold mt-2 mb-1">Data de Envio:</label><input type="date" id="cehop-data-envio" class="w-full px-3 py-2 border rounded-xl text-xs">`;
+            } else { container.innerHTML = ''; }
         }
 
         function toggleEntrevistaFields(val) {
-            document.getElementById('field-data-emissao').classList.toggle('hidden', val !== 'Contrato emitido');
-            document.getElementById('field-data-assinatura').classList.toggle('hidden', val !== 'Contrato Assinado Cliente');
+            const container = document.getElementById('entrevista-dinamic-field');
+            if (val === 'Aguardando Extratos Bancários') {
+                container.innerHTML = `<label class="block text-xs font-semibold mt-2 mb-1">Data de Solicitação:</label><input type="date" id="ent-data-solic" class="w-full px-3 py-2 border rounded-xl text-xs">`;
+            } else if (val === 'Aguardando agenda') {
+                container.innerHTML = `<label class="block text-xs font-semibold mt-2 mb-1">Data Agendada:</label><input type="date" id="ent-data-agenda" class="w-full px-3 py-2 border rounded-xl text-xs">`;
+            } else if (val === 'Aguardando assinatura Cliente') {
+                container.innerHTML = `<label class="block text-xs font-semibold mt-2 mb-1">Data de Envio do Contrato:</label><input type="date" id="ent-data-envio" class="w-full px-3 py-2 border rounded-xl text-xs">`;
+            } else if (val === 'Contrato Assinado Cliente') {
+                container.innerHTML = `<label class="block text-xs font-semibold mt-2 mb-1">Data de Assinatura:</label><input type="date" id="ent-data-assinatura" class="w-full px-3 py-2 border rounded-xl text-xs">`;
+            } else { container.innerHTML = ''; }
         }
 
         function toggleCartorioFields(val) {
-            const container = document.getElementById('cartorio-fields-container');
-            const p = processes.find(x => x.id === activeProcessId);
-            if (!container || !p) return;
-
-            let html = '';
-            if (val === '1 Entrada no Cartório') {
-                html = `
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Data de Entrada no Cartório:</label>
-                        <input type="date" id="cart-data-entrada" value="${p.dataEntradaCartorio || ''}" class="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs dark:text-white">
-                    </div>
-                `;
-            } else if (val === '2 Contrato Registrado' || val === '6 Contrato Registrado em Cartório') {
-                html = `
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Data do Contrato Registrado:</label>
-                        <input type="date" id="cart-data-registrado" value="${p.dataContratoRegistrado || ''}" class="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs dark:text-white">
-                    </div>
-                `;
-            } else if (val === '3 Contrato com Pendência em Cartório') {
-                html = `
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Observação da Pendência:</label>
-                        <textarea id="cart-obs" rows="2" class="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs dark:text-white">${p.obsCartorio || ''}</textarea>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Data da Possível Resolução:</label>
-                        <input type="date" id="cart-data-resolucao" value="${p.dataResolucaoCartorio || ''}" class="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs dark:text-white">
-                    </div>
-                `;
-            }
-            container.innerHTML = html;
+            const container = document.getElementById('cartorio-dinamic-field');
+            if (val === 'Entrada de Registro em Cartório') {
+                container.innerHTML = `<label class="block text-xs font-semibold mt-2 mb-1">Data de Entrada:</label><input type="date" id="cart-data-entrada" class="w-full px-3 py-2 border rounded-xl text-xs">`;
+            } else if (val === 'Pendencia Cartório') {
+                container.innerHTML = `<label class="block text-xs font-semibold mt-2 mb-1">Observação da Pendência:</label><textarea id="cart-obs" rows="2" class="w-full px-3 py-2 border rounded-xl text-xs"></textarea>`;
+            } else { container.innerHTML = ''; }
         }
 
-        function moveProcess(targetStage) {
+        async function saveProcessChanges() {
             const p = processes.find(x => x.id === activeProcessId);
             if (!p) return;
 
-            const oldStageName = STAGES.find(s => s.id === p.stage).name;
-            const newStageName = STAGES.find(s => s.id === targetStage).name;
-
-            p.stage = targetStage;
-            p.logs.push({ date: new Date().toLocaleString(), text: `Movido de "${oldStageName}" para "${newStageName}" por ${currentUser.name}` });
-
-            saveData();
-            renderKanban();
-            openDetailsModal(p.id);
-            addNotification(`Processo ${p.id} movido para ${newStageName}`);
-        }
-
-        function saveProcessChanges() {
-            const p = processes.find(x => x.id === activeProcessId);
-            if (!p) return;
-
-            if (p.stage === 'entrevista') {
-                const subSel = document.getElementById('ctrl-entrevista-status');
-                if (subSel) {
-                    p.subStatus = subSel.value;
-                    if (p.subStatus === 'Contrato emitido') {
-                        p.dataEmissaoContrato = document.getElementById('ctrl-data-emissao').value;
-                    } else if (p.subStatus === 'Contrato Assinado Cliente') {
-                        p.dataAssinaturaCliente = document.getElementById('ctrl-data-assinatura').value;
-                        p.stage = 'cartorio';
-                        p.subStatus = '1 Entrada no Cartório';
-                        p.logs.push({ date: new Date().toLocaleString(), text: `Contrato assinado. Avançado automaticamente para Cartório.` });
-                    }
+            if (p.stage === 'cadastro') {
+                const status = document.getElementById('ctrl-analise-status').value;
+                if (status === 'reprovado') {
+                    p.stage = 'reprovados';
+                    p.subStatus = document.getElementById('reprova-motivo').value;
+                    p.logs.push({ date: new Date().toLocaleString(), text: `Reprovado. Motivo: ${p.subStatus}` });
+                } else {
+                    p.dadosAprovacao = {
+                        imovel: document.getElementById('aprov-imovel').value,
+                        fin: document.getElementById('aprov-fin').value,
+                        fgts: document.getElementById('aprov-fgts').value,
+                        subCP: document.getElementById('aprov-sub-cp').value,
+                        subFed: document.getElementById('aprov-sub-fed').value,
+                        rendas: document.getElementById('aprov-rendas').value,
+                        prazo: document.getElementById('aprov-prazo').value
+                    };
+                    p.stage = 'aguardando_venda';
+                    p.subStatus = status === 'aprovado_pendencia' ? 'Aprovado com Pendência' : 'Aprovado - Aguardando Venda';
+                    p.logs.push({ date: new Date().toLocaleString(), text: `Aprovado (${p.subStatus}). Retornado para Construtora.` });
+                }
+            } else if (p.stage === 'aguardando_venda') {
+                const fileInput = document.getElementById('venda-contrato-file');
+                if (fileInput && fileInput.files[0]) {
+                    p.stage = 'venda_nova';
+                    p.subStatus = 'Enviado para Financiamento';
+                    p.logs.push({ date: new Date().toLocaleString(), text: `Enviado para Financiamento.` });
+                    alert('Enviado para Financiamento');
+                } else { alert('Anexe o contrato assinado.'); return; }
+            } else if (p.stage === 'venda_nova') {
+                p.subStatus = document.getElementById('ctrl-repasse-status').value;
+                if (p.subStatus === 'Assinado Formulários') {
+                    p.stage = 'cehop';
+                    p.subStatus = 'Enviado para CEHOP';
+                    p.logs.push({ date: new Date().toLocaleString(), text: `Enviado para CEHOP.` });
+                }
+            } else if (p.stage === 'cehop') {
+                p.subStatus = document.getElementById('ctrl-cehop-status').value;
+                if (p.subStatus === 'Aguardando Conformidade') {
+                    p.stage = 'entrevista';
+                    p.subStatus = 'Entrevista Comercial - Em agendamento';
+                    p.logs.push({ date: new Date().toLocaleString(), text: `Movido para Entrevista Comercial.` });
+                }
+            } else if (p.stage === 'entrevista') {
+                p.subStatus = document.getElementById('ctrl-entrevista-status').value;
+                if (p.subStatus === 'Contrato Assinado Cliente') {
+                    p.stage = 'cartorio';
+                    p.subStatus = 'Entrada de Registro em Cartório';
+                    p.logs.push({ date: new Date().toLocaleString(), text: `Movido para Registro.` });
                 }
             } else if (p.stage === 'cartorio') {
-                const subSel = document.getElementById('ctrl-cartorio-sub');
-                if (subSel) {
-                    p.subStatus = subSel.value;
-                    if (p.subStatus === '1 Entrada no Cartório') {
-                        const el = document.getElementById('cart-data-entrada');
-                        if(el) p.dataEntradaCartorio = el.value;
-                    } else if (p.subStatus === '2 Contrato Registrado' || p.subStatus === '6 Contrato Registrado em Cartório') {
-                        const el = document.getElementById('cart-data-registrado');
-                        if(el) p.dataContratoRegistrado = el.value;
-                    } else if (p.subStatus === '3 Contrato com Pendência em Cartório') {
-                        const obsEl = document.getElementById('cart-obs');
-                        const resEl = document.getElementById('cart-data-resolucao');
-                        if(obsEl) p.obsCartorio = obsEl.value;
-                        if(resEl) p.dataResolucaoCartorio = resEl.value;
-                    }
+                p.subStatus = document.getElementById('ctrl-cartorio-status').value;
+                if (p.subStatus === 'Contrato Registrado') {
+                    p.isFinalizado = true;
+                    p.logs.push({ date: new Date().toLocaleString(), text: `Contrato Registrado. Relatório salvo na pasta Processos Finalizados.` });
+                    gerarMatrizPDF(p.id);
                 }
             }
 
-            p.logs.push({ date: new Date().toLocaleString(), text: `Dados atualizados por ${currentUser.name}` });
-            saveData();
+            await salvarProcessoNoBanco(p);
             renderKanban();
+            renderFinalizadosTable();
             alert('Alterações salvas com sucesso!');
             closeDetailsModal();
         }
 
-        function uploadDocument() {
+        function gerarMatrizPDF(id) {
+            const p = processes.find(x => x.id === id);
+            if (!p) return;
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(`
+                <html><head><title>Relatório ${p.id}</title><script src="https://cdn.tailwindcss.com"><\/script></head>
+                <body class="p-8 bg-white text-slate-800">
+                    <div class="max-w-3xl mx-auto space-y-6">
+                        <h1 class="text-xl font-bold text-blue-900">Domínio Serviços de Crédito - Relatório / Matriz Executiva</h1>
+                        <p class="text-xs text-slate-500">ID: ${p.id} | Data: ${new Date().toLocaleDateString()}</p>
+                        <div class="grid grid-cols-2 gap-4 bg-slate-50 p-4 rounded-xl text-xs">
+                            <div><strong>Proponente:</strong> ${p.nome}</div><div><strong>CPF:</strong> ${p.cpf}</div>
+                            <div><strong>Empreendimento:</strong> ${p.empreendimento}</div><div><strong>VGF:</strong> R$ ${p.valor}</div>
+                        </div>
+                        <div class="bg-blue-50 p-4 rounded-xl text-xs space-y-1">
+                            <h3 class="font-bold text-blue-900">Dados de Aprovação & Conclusão</h3>
+                            <p><strong>Imóvel Aprovado:</strong> R$ ${p.dadosAprovacao.imovel || '--'}</p>
+                            <p><strong>Financiamento Aprovado:</strong> R$ ${p.dadosAprovacao.fin || '--'}</p>
+                            <p><strong>FGTS:</strong> R$ ${p.dadosAprovacao.fgts || '--'}</p>
+                            <p><strong>Subsídio Casa Paulista:</strong> R$ ${p.dadosAprovacao.subCP || '--'}</p>
+                            <p><strong>Subsídio Federal:</strong> R$ ${p.dadosAprovacao.subFed || '--'}</p>
+                            <p><strong>Renda Proponentes:</strong> ${p.dadosAprovacao.rendas || '--'}</p>
+                            <p><strong>Prazo Aprovado:</strong> ${p.dadosAprovacao.prazo || '--'} meses</p>
+                        </div>
+                    </div><script>window.onload = () => { window.print(); }<\/script>
+                </body></html>
+            `);
+            printWindow.document.close();
+        }
+
+        async function uploadDocument() {
             const titleInput = document.getElementById('doc-title');
             const fileInput = document.getElementById('doc-file');
             const p = processes.find(x => x.id === activeProcessId);
-
-            if (!titleInput.value || !fileInput.files[0] || !p) {
-                alert('Preencha o título e selecione um arquivo.');
-                return;
-            }
-
+            if (!titleInput.value || !fileInput.files[0] || !p) return;
             const file = fileInput.files[0];
             const reader = new FileReader();
-            reader.onload = function(e) {
-                p.documents.push({
-                    title: titleInput.value,
-                    name: file.name,
-                    data: e.target.result,
-                    date: new Date().toLocaleString()
-                });
-                p.logs.push({ date: new Date().toLocaleString(), text: `Documento "${titleInput.value}" anexado.` });
-                saveData();
-                titleInput.value = '';
-                fileInput.value = '';
+            reader.onload = async function(e) {
+                p.documents.push({ title: titleInput.value, name: file.name, data: e.target.result, date: new Date().toLocaleString() });
+                await salvarProcessoNoBanco(p);
+                titleInput.value = ''; fileInput.value = '';
                 renderDocumentsList();
             };
             reader.readAsDataURL(file);
@@ -1351,268 +1224,36 @@
             const p = processes.find(x => x.id === activeProcessId);
             const list = document.getElementById('documents-list');
             if (!p || !list) return;
-
-            if (p.documents.length === 0) {
-                list.innerHTML = `<div class="p-4 text-center text-xs text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-200 dark:border-slate-700">Nenhum documento anexado.</div>`;
-                return;
-            }
-
-            list.innerHTML = '';
-            p.documents.forEach((doc, idx) => {
-                const div = document.createElement('div');
-                div.className = 'flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-200 dark:border-slate-700 text-xs';
-                div.innerHTML = `
-                    <div>
-                        <strong class="text-slate-900 dark:text-white block">${doc.title}</strong>
-                        <span class="text-slate-400 text-[10px]">${doc.name} • ${doc.date}</span>
-                    </div>
-                    <div class="flex space-x-2">
-                        <a href="${doc.data}" target="_blank" class="px-3 py-1 bg-blue-900 text-white rounded-lg hover:bg-blue-800 transition"><i class="fa-solid fa-eye"></i></a>
-                        <button onclick="deleteDocument(${idx})" class="px-3 py-1 bg-red-100 dark:bg-red-950 text-red-700 dark:text-red-300 rounded-lg hover:bg-red-200 transition"><i class="fa-solid fa-trash"></i></button>
-                    </div>
-                `;
-                list.appendChild(div);
-            });
-        }
-
-        function deleteDocument(idx) {
-            const p = processes.find(x => x.id === activeProcessId);
-            if (!p) return;
-            p.documents.splice(idx, 1);
-            saveData();
-            renderDocumentsList();
-        }
-
-        function sendChatMessage() {
-            const input = document.getElementById('chat-input');
-            const p = processes.find(x => x.id === activeProcessId);
-            if (!input.value.trim() || !p) return;
-
-            p.chat.push({
-                user: currentUser.name,
-                role: currentUser.role,
-                text: input.value.trim(),
-                time: new Date().toLocaleString()
-            });
-            saveData();
-            input.value = '';
-            renderChatMessages();
-        }
-
-        function handleChatKeypress(e) { if (e.key === 'Enter') sendChatMessage(); }
-
-        function renderChatMessages() {
-            const p = processes.find(x => x.id === activeProcessId);
-            const container = document.getElementById('chat-messages');
-            if (!p || !container) return;
-
-            if (p.chat.length === 0) {
-                container.innerHTML = `<div class="text-center text-slate-400 dark:text-slate-500 py-6">Nenhuma mensagem no chat ainda.</div>`;
-                return;
-            }
-
-            container.innerHTML = '';
-            p.chat.forEach(msg => {
-                const div = document.createElement('div');
-                div.className = 'p-3 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm';
-                div.innerHTML = `
-                    <div class="flex items-center justify-between mb-1">
-                        <span class="font-bold text-slate-900 dark:text-white">${msg.user} <span class="text-[10px] bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 px-1.5 py-0.5 rounded-full font-normal">${msg.role}</span></span>
-                        <span class="text-[10px] text-slate-400">${msg.time}</span>
-                    </div>
-                    <p class="text-slate-700 dark:text-slate-300">${msg.text}</p>
-                `;
-                container.appendChild(div);
-            });
-            container.scrollTop = container.scrollHeight;
+            list.innerHTML = p.documents.length === 0 ? `<div class="p-4 text-center text-xs text-slate-400">Nenhum documento.</div>` : p.documents.map(d => `<div class="flex justify-between p-3 bg-slate-50 dark:bg-slate-800 rounded-xl text-xs"><span><strong>${d.title}</strong> (${d.name})</span><a href="${d.data}" target="_blank" class="px-3 py-1 bg-blue-900 text-white rounded-lg">Ver</a></div>`).join('');
         }
 
         function renderAuditLogs() {
             const p = processes.find(x => x.id === activeProcessId);
             const container = document.getElementById('audit-logs-list');
             if (!p || !container) return;
-
-            container.innerHTML = '';
-            p.logs.forEach(log => {
-                const div = document.createElement('div');
-                div.className = 'p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-200 dark:border-slate-700 flex items-start space-x-3';
-                div.innerHTML = `
-                    <div class="w-2 h-2 rounded-full bg-blue-900 dark:bg-blue-400 mt-1.5 flex-shrink-0"></div>
-                    <div>
-                        <span class="text-[10px] text-slate-400 font-mono block">${log.date}</span>
-                        <span class="text-slate-700 dark:text-slate-300 font-medium">${log.text}</span>
-                    </div>
-                `;
-                container.appendChild(div);
-            });
-        }
-
-        function generateCartorioPDFReport(id) {
-            const p = processes.find(x => x.id === id);
-            if (!p) return;
-
-            const printWindow = window.open('', '_blank');
-            printWindow.document.write(`
-                <html>
-                <head>
-                    <title>Relatório Processo ${p.id} - Domínio Serviços</title>
-                    <script src="https://cdn.tailwindcss.com"><\/script>
-                </head>
-                <body class="p-8 bg-white text-slate-800">
-                    <div class="max-w-3xl mx-auto space-y-6">
-                        <div class="border-b border-slate-200 pb-4 flex justify-between items-center">
-                            <div>
-                                <h1 class="text-xl font-bold text-blue-900">Domínio Serviços de Crédito</h1>
-                                <p class="text-xs text-slate-500">Relatório Executivo de Encerramento e SLA</p>
-                            </div>
-                            <div class="text-right">
-                                <span class="text-xs font-mono bg-blue-50 text-blue-900 px-3 py-1 rounded-lg font-bold">${p.id}</span>
-                                <p class="text-[10px] text-slate-400 mt-1">Emitido em: ${new Date().toLocaleDateString()}</p>
-                            </div>
-                        </div>
-
-                        <div class="grid grid-cols-2 gap-4 bg-slate-50 p-4 rounded-xl border border-slate-200 text-xs">
-                            <div><strong>Proponente:</strong> ${p.nome}</div>
-                            <div><strong>CPF:</strong> ${p.cpf}</div>
-                            <div><strong>Empreendimento:</strong> ${p.empreendimento}</div>
-                            <div><strong>VGF Total:</strong> R$ ${p.valor}</div>
-                        </div>
-
-                        <div>
-                            <h3 class="font-bold text-sm text-slate-900 mb-2">Histórico de Eventos & SLA do Processo</h3>
-                            <div class="space-y-2 text-xs">
-                                ${p.logs.map(l => `<div class="p-2 bg-slate-50 border border-slate-100 rounded-lg flex justify-between"><span>${l.text}</span><span class="text-slate-400">${l.date}</span></div>`).join('')}
-                            </div>
-                        </div>
-
-                        <div class="bg-blue-50 p-4 rounded-xl border border-blue-100 text-xs space-y-2">
-                            <h3 class="font-bold text-blue-900">Métricas e Eficiência Operacional</h3>
-                            <p>O processo cumpriu todos os marcos regulatórios de correspondência Caixa até o registro cartorário final, garantindo conformidade documental e pontualidade na liberação de crédito.</p>
-                        </div>
-
-                        <div class="pt-8 flex justify-between items-center text-xs text-slate-400 border-t border-slate-200">
-                            <span>Domínio Serviços de Crédito - Sistema Integrado</span>
-                            <span>Assinatura do Analista Responsável</span>
-                        </div>
-                    </div>
-                    <script>
-                        window.onload = () => { window.print(); }
-                    <\/script>
-                </body>
-                </html>
-            `);
-            printWindow.document.close();
+            container.innerHTML = p.logs.map(l => `<div class="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl"><span class="text-[10px] text-slate-400 block">${l.date}</span><span>${l.text}</span></div>`).join('');
         }
 
         function exportToCSV() {
-            let csv = 'ID,Proponente,CPF,Empreendimento,Valor VGF,Etapa Atual,SubStatus,Data Criacao\n';
+            let csv = 'ID,Proponente,CPF,Empreendimento,Valor VGF,Etapa Atual,SubStatus,Data\n';
             processes.filter(p => !p.isDistrato).forEach(p => {
                 csv += `"${p.id}","${p.nome}","${p.cpf}","${p.empreendimento}","R$ ${p.valor}","${p.stage}","${p.subStatus || ''}","${p.dataCriacao}"\n`;
             });
             const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
             const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.setAttribute('href', url);
-            a.setAttribute('download', 'relatorio_dominio_credito.csv');
-            a.click();
+            const a = document.createElement('a'); a.setAttribute('href', url); a.setAttribute('download', 'relatorio.csv'); a.click();
         }
 
         function renderDashboard() {
-            const activeProcesses = processes.filter(p => !p.isDistrato);
-            const totalVGF = activeProcesses.reduce((acc, p) => acc + parseFloat(p.valor.replace(/\./g, '').replace(',', '.')), 0);
-            const totalProc = activeProcesses.length;
-            const concluidos = activeProcesses.filter(p => p.stage === 'cartorio').length;
-            const distratados = processes.filter(p => p.isDistrato).length;
-
-            const metricsContainer = document.getElementById('metric-cards');
-            metricsContainer.innerHTML = `
-                <div class="bg-white dark:bg-slate-900 p-5 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800">
-                    <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider block mb-1">Processos Ativos</span>
-                    <span class="text-2xl font-bold text-slate-900 dark:text-white">${totalProc}</span>
-                </div>
-                <div class="bg-white dark:bg-slate-900 p-5 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800">
-                    <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider block mb-1">Volume VGF Ativo</span>
-                    <span class="text-2xl font-bold text-emerald-600 dark:text-emerald-400">R$ ${totalVGF.toLocaleString('pt-BR', {minimumFractionDigits: 2})}</span>
-                </div>
-                <div class="bg-white dark:bg-slate-900 p-5 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800">
-                    <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider block mb-1">Processos Concluídos</span>
-                    <span class="text-2xl font-bold text-blue-900 dark:text-blue-400">${concluidos}</span>
-                </div>
-                <div class="bg-white dark:bg-slate-900 p-5 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800">
-                    <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider block mb-1">Total Distratados</span>
-                    <span class="text-2xl font-bold text-red-600 dark:text-red-400">${distratados}</span>
-                </div>
+            const activeProcesses = processes.filter(p => !p.isDistrato && !p.isFinalizado);
+            const totalVGF = activeProcesses.reduce((acc, p) => acc + parseFloat(p.valor.replace(/\./g, '').replace(',', '.')) || 0, 0);
+            document.getElementById('metric-cards').innerHTML = `
+                <div class="bg-white dark:bg-slate-900 p-5 rounded-2xl shadow-sm border"><span class="text-xs text-slate-400 block">Processos Ativos</span><span class="text-2xl font-bold">${activeProcesses.length}</span></div>
+                <div class="bg-white dark:bg-slate-900 p-5 rounded-2xl shadow-sm border"><span class="text-xs text-slate-400 block">Volume VGF Ativo</span><span class="text-2xl font-bold text-emerald-600">R$ ${totalVGF.toLocaleString('pt-BR', {minimumFractionDigits: 2})}</span></div>
+                <div class="bg-white dark:bg-slate-900 p-5 rounded-2xl shadow-sm border"><span class="text-xs text-slate-400 block">Finalizados</span><span class="text-2xl font-bold text-blue-900">${processes.filter(p => p.isFinalizado).length}</span></div>
+                <div class="bg-white dark:bg-slate-900 p-5 rounded-2xl shadow-sm border"><span class="text-xs text-slate-400 block">Distratados</span><span class="text-2xl font-bold text-red-600">${processes.filter(p => p.isDistrato).length}</span></div>
             `;
-
-            const etapasContainer = document.getElementById('chart-etapas');
-            etapasContainer.innerHTML = '';
-            STAGES.forEach(st => {
-                const count = activeProcesses.filter(p => p.stage === st.id).length;
-                const pct = totalProc > 0 ? (count / totalProc) * 100 : 0;
-                etapasContainer.innerHTML += `
-                    <div>
-                        <div class="flex justify-between text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                            <span>${st.name}</span>
-                            <span>${count} (${pct.toFixed(0)}%)</span>
-                        </div>
-                        <div class="w-full h-2.5 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
-                            <div class="h-full bg-blue-900 dark:bg-blue-500 rounded-full" style="width: ${pct}%"></div>
-                        </div>
-                    </div>
-                `;
-            });
-
-            const construtorasContainer = document.getElementById('chart-construtoras');
-            construtorasContainer.innerHTML = '';
-            const construtorasMap = {};
-            activeProcesses.forEach(p => {
-                construtorasMap[p.empreendimento] = (construtorasMap[p.empreendimento] || 0) + 1;
-            });
-            Object.keys(construtorasMap).forEach(emp => {
-                const count = construtorasMap[emp];
-                const pct = totalProc > 0 ? (count / totalProc) * 100 : 0;
-                construtorasContainer.innerHTML += `
-                    <div>
-                        <div class="flex justify-between text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                            <span>${emp}</span>
-                            <span>${count} processos</span>
-                        </div>
-                        <div class="w-full h-2.5 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
-                            <div class="h-full bg-emerald-600 dark:text-emerald-400 rounded-full" style="width: ${pct}%"></div>
-                        </div>
-                    </div>
-                `;
-            });
         }
-
-        function addNotification(text) {
-            notifications.unshift({ text, time: new Date().toLocaleTimeString() });
-            localStorage.setItem('dominio_notifications', JSON.stringify(notifications));
-            updateNotificationsBadge();
-        }
-
-        function updateNotificationsBadge() {
-            const badge = document.getElementById('notif-badge');
-            const list = document.getElementById('notif-list');
-            if (notifications.length > 0) {
-                badge.textContent = notifications.length;
-                badge.classList.remove('hidden');
-                list.innerHTML = notifications.map(n => `<div class="p-3"><strong class="block text-slate-900 dark:text-white">${n.text}</strong><span class="text-[10px] text-slate-400">${n.time}</span></div>`).join('');
-            } else {
-                badge.classList.add('hidden');
-                list.innerHTML = `<div class="p-4 text-center text-slate-400">Nenhuma notificação recente</div>`;
-            }
-        }
-
-        function toggleNotifications() { document.getElementById('notif-dropdown').classList.toggle('hidden'); }
-        function clearNotifications() {
-            notifications = [];
-            localStorage.removeItem('dominio_notifications');
-            updateNotificationsBadge();
-            document.getElementById('notif-dropdown').classList.add('hidden');
-        }
-
-        function saveData() { localStorage.setItem('dominio_processes', JSON.stringify(processes)); }
     </script>
 </body>
 </html>
